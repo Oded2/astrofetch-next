@@ -5,10 +5,13 @@ import { DayPicker } from "react-day-picker";
 interface Props<T> {
   value: T;
   setValue: (newValue: T) => void;
+  min?: T;
+  max?: T;
 }
 
-export function DatePicker({ value, setValue }: Props<Date>) {
+export function DatePicker({ value, setValue, min, max }: Props<Date>) {
   // Can only be used after load
+  const today = new Date();
   return (
     <>
       <button
@@ -26,6 +29,7 @@ export function DatePicker({ value, setValue }: Props<Date>) {
         style={{ positionAnchor: "--rdp" } as React.CSSProperties}
       >
         <DayPicker
+          hidden={min ? { before: min, after: max } : []}
           captionLayout="dropdown"
           className="react-day-picker"
           mode="single"

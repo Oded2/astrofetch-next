@@ -4,6 +4,7 @@ import { DatePicker } from "@/components/Inputs";
 import { useEffect, useState } from "react";
 
 const today = new Date();
+const minDate = new Date("1995-06-16");
 
 export default function Home() {
   const [load, setLoad] = useState(false);
@@ -33,7 +34,14 @@ export default function Home() {
           </p>
           <button className="btn btn-primary">Get Started</button>
           <div>
-            {load && <DatePicker value={date} setValue={setDate}></DatePicker>}
+            {load && (
+              <DatePicker
+                value={date}
+                setValue={setDate}
+                min={minDate}
+                max={today}
+              ></DatePicker>
+            )}
           </div>
         </div>
       </div>
