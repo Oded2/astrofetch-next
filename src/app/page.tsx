@@ -1,6 +1,20 @@
 "use client";
 
+import { DatePicker } from "@/components/Inputs";
+import { useEffect, useState } from "react";
+
+const today = new Date();
+
 export default function Home() {
+  const [load, setLoad] = useState(false);
+  const [date, setDate] = useState<Date>(today);
+  useEffect(() => {
+    console.log(date);
+  }, [date]);
+
+  useEffect(() => {
+    setLoad(true);
+  }, []);
   return (
     <div
       className="hero min-h-screen"
@@ -18,6 +32,9 @@ export default function Home() {
             the Astronomy Picture of the Day (APOD).
           </p>
           <button className="btn btn-primary">Get Started</button>
+          <div>
+            {load && <DatePicker value={date} setValue={setDate}></DatePicker>}
+          </div>
         </div>
       </div>
     </div>
