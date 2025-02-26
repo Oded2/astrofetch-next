@@ -46,8 +46,8 @@ export function DatePicker({
           captionLayout="dropdown"
           className="react-day-picker"
           mode="single"
-          selected={value}
           required
+          selected={value}
           onSelect={setValue}
         />
         )
