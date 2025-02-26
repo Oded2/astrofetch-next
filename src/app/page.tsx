@@ -32,14 +32,16 @@ export default function Home() {
             Welcome to AstroFetch. A simple yet effective tool to easily view
             the Astronomy Picture of the Day (APOD).
           </p>
-          <button className="btn btn-primary">Get Started</button>
-          <div>
+          <button className="btn btn-primary">Date Range</button>
+          <div className="divider">OR</div>
+          <div className="join">
             {load && (
               <DatePicker
                 value={date}
                 setValue={setDate}
                 min={minDate}
                 max={today}
+                join
               ></DatePicker>
             )}
           </div>

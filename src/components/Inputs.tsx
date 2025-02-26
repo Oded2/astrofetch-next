@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { DayPicker } from "react-day-picker";
 
 interface Props<T> {
@@ -7,16 +7,21 @@ interface Props<T> {
   setValue: (newValue: T) => void;
   min?: T;
   max?: T;
+  join?: boolean;
 }
 
-export function DatePicker({ value, setValue, min, max }: Props<Date>) {
+export function DatePicker({ value, setValue, min, max, join }: Props<Date>) {
+  const btn = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (join) btn.current?.classList.add("join-item");
+  }, []);
   // Can only be used after load
-  const today = new Date();
   return (
     <>
       <button
+        ref={btn}
         popoverTarget="rdp-popover"
-        className="input input-border"
+        className="input"
         style={{ anchorName: "--rdp" } as React.CSSProperties}
       >
         {value ? value.toLocaleDateString() : "Pick a date"}
