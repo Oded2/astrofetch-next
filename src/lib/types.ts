@@ -1,10 +1,10 @@
 export type ApodData = {
-  copyright?: string; // Optional, as some APOD entries might not have it
-  date: string; // YYYY-MM-DD format
+  copyright: string;
+  date: string; // Format: YYYY-MM-DD
   explanation: string;
-  hdurl?: string; // Optional, since not all entries have an HD image
-  media_type: string; // Usually "image" or "video"
+  media_type: "image" | "video"; // APOD typically has either "image" or "video"
   service_version: string;
+  thumbnail_url?: string; // Optional because images may not have it
   title: string;
   url: string;
 };

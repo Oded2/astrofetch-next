@@ -36,6 +36,11 @@ export default function Home() {
               min={minDate}
               max={today}
               join
+              footer={`Choose any date from ${minDate.toLocaleString("en-US", {
+                day: "numeric",
+                month: "long",
+                year: "numeric",
+              })} to today.`}
             ></DatePicker>{" "}
             <Link
               href={{ pathname: "/view", query: { date: formatDateISO(date) } }}

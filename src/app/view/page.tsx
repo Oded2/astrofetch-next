@@ -2,37 +2,41 @@
 
 import { Container } from "@/components/Container";
 import { addParams } from "@/lib/helpers";
-import { ApodData } from "@/lib/types";
+import type { ApodData } from "@/lib/types";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, Suspense } from "react";
 
-export default function View({}) {
+function View() {
   const [apodData, setApodData] = useState<ApodData | null>(null);
-  const [mediaUrl, setMediaUrl] = useState<string>("/images/1x1.png");
   const loadingMessage = "Loading...";
   const params = useSearchParams();
-  const date = params.get("date") ?? "2025-01-01";
-  const endpoint = addParams("/api", { start: date, end: date });
+  const date = params?.get("date") ?? "2025-01-01";
+  const endpoint = useMemo(
+    () => addParams("/api", { start: date, end: date }),
+    [date]
+  );
+
   useEffect(() => {
-    if (apodData) setMediaUrl(apodData.url);
-  }, [apodData]);
-  useEffect(() => {
-    fetch(endpoint).then((res) => res.json().then((json) => setApodData(json)));
-  }, []);
+    fetch(endpoint)
+      .then((res) => res.json())
+      .then((json) => setApodData(json));
+  }, [endpoint]);
 
   return (
     <main>
       <div className="bg-gray-950 min-h-screen relative">
-        <div
-          style={{
-            backgroundImage: `url(${mediaUrl})`,
-          }}
-          className="absolute inset-0 bg-cover bg-center before:absolute before:inset-0 before:backdrop-blur-lg before:bg-black/30 opacity-30"
-        ></div>
+        {apodData && (
+          <div
+            style={{
+              backgroundImage: `url(${apodData.thumbnail_url ?? apodData.url})`,
+            }}
+            className="absolute inset-0 bg-cover bg-center before:absolute before:inset-0 before:backdrop-blur-lg before:bg-black/30 opacity-30"
+          />
+        )}
         <div className="relative min-h-screen h-screen">
-          <Container classname="h-full">
-            <div className="flex overflow-hidden h-full justify-between gap-8">
+          <Container className="h-full">
+            <div className="flex flex-col-reverse lg:flex-row overflow-hidden h-full justify-between gap-8">
               <div className="my-auto">
                 <h1 className="text-3xl font-bold mb-2">
                   {apodData?.title ?? loadingMessage}
@@ -42,7 +46,7 @@ export default function View({}) {
                   {apodData?.copyright && (
                     <span>
                       &copy;&nbsp;
-                      {apodData?.copyright?.replaceAll("\\n", "") ??
+                      {apodData.copyright.replaceAll("\\n", "") ??
                         loadingMessage}
                     </span>
                   )}
@@ -62,15 +66,33 @@ export default function View({}) {
                   </div>
                 </div>
               </div>
-              <img
-                src={mediaUrl}
-                alt={apodData?.title ?? "Blank"}
-                className="max-h-full rounded-lg object-contain max-w-3xl xl:max-w-4xl 2xl:max-w-5xl shadow"
-              />
+              {apodData && apodData.media_type === "image" && (
+                <img
+                  src={apodData.url}
+                  alt={apodData?.title ?? "Blank"}
+                  className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl shadow"
+                />
+              )}
+              {apodData && apodData.media_type === "video" && (
+                <iframe
+                  src={apodData.url}
+                  title={apodData?.title ?? "Blank"}
+                  className="aspect-video h-96 w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl shadow my-auto"
+                  allowFullScreen
+                />
+              )}
             </div>
           </Container>
         </div>
       </div>
     </main>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <View />
+    </Suspense>
   );
 }

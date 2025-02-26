@@ -9,6 +9,7 @@ interface Props<T> {
   min?: T;
   max?: T;
   join?: boolean;
+  footer?: string;
 }
 
 export function DatePicker({
@@ -17,6 +18,7 @@ export function DatePicker({
   min,
   max,
   join = false,
+  footer = "",
 }: Props<Date>) {
   const [load, setLoad] = useState(false);
   useEffect(() => {
@@ -40,9 +42,9 @@ export function DatePicker({
         className="dropdown"
         style={{ positionAnchor: "--rdp" } as React.CSSProperties}
       >
-        (
         <DayPicker
           hidden={min ? { before: min, after: max } : []}
+          footer={<span className="px-4">{footer}</span>}
           captionLayout="dropdown"
           className="react-day-picker"
           mode="single"
@@ -50,7 +52,6 @@ export function DatePicker({
           selected={value}
           onSelect={setValue}
         />
-        )
       </div>
     </>
   );

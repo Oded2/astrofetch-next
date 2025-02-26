@@ -1,12 +1,12 @@
 import { ReactNode } from "react";
 
 interface Props {
-  classname?: string;
+  className?: string;
   children: ReactNode;
 }
 
-export function Container({ classname = "", children }: Props) {
+export function Container({ className = "", children }: Props) {
   return (
-    <div className={"container mx-auto py-5 " + classname}>{children}</div>
+    <div className={"container mx-auto py-5 " + className}>{children}</div>
   );
 }
