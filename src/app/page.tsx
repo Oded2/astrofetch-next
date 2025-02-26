@@ -1,21 +1,21 @@
 "use client";
 
 import { DatePicker } from "@/components/Inputs";
+import { addParams, formatDateISO } from "@/lib/helpers";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const today = new Date();
 const minDate = new Date("1995-06-16");
 
 export default function Home() {
-  const [load, setLoad] = useState(false);
   const [date, setDate] = useState<Date>(today);
-  useEffect(() => {
-    console.log(date);
-  }, [date]);
+  const [origin, setOrigin] = useState("");
 
   useEffect(() => {
-    setLoad(true);
+    setOrigin(window.origin);
   }, []);
+
   return (
     <div
       className="hero min-h-screen"
@@ -41,7 +41,13 @@ export default function Home() {
               min={minDate}
               max={today}
               join
-            ></DatePicker>
+            ></DatePicker>{" "}
+            <Link
+              href={{ pathname: "/view", query: { date: formatDateISO(date) } }}
+              className="btn btn-primary join-item"
+            >
+              Quick Fetch
+            </Link>
           </div>
         </div>
       </div>

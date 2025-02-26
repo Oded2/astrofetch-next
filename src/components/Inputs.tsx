@@ -11,7 +11,13 @@ interface Props<T> {
   join?: boolean;
 }
 
-export function DatePicker({ value, setValue, min, max, join }: Props<Date>) {
+export function DatePicker({
+  value,
+  setValue,
+  min,
+  max,
+  join = false,
+}: Props<Date>) {
   const [load, setLoad] = useState(false);
   useEffect(() => {
     setLoad(true);
