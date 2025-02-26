@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { DayPicker } from "react-day-picker";
 import clsx from "clsx";
 
@@ -12,7 +12,6 @@ interface Props<T> {
 }
 
 export function DatePicker({ value, setValue, min, max, join }: Props<Date>) {
-  const btn = useRef<HTMLButtonElement>(null);
   const [load, setLoad] = useState(false);
   useEffect(() => {
     setLoad(true);
