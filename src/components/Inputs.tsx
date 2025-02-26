@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { DayPicker } from "react-day-picker";
+import clsx from "clsx";
 
 interface Props<T> {
   value: T;
@@ -21,7 +22,7 @@ export function DatePicker({ value, setValue, min, max, join }: Props<Date>) {
       {load && (
         <button
           popoverTarget="rdp-popover"
-          className={`input ${join ? "join-item" : ""}`}
+          className={clsx("input cursor-pointer", join && "join-item")}
           style={{ anchorName: "--rdp" } as React.CSSProperties}
         >
           {value ? value.toLocaleDateString() : "Pick a date"}
