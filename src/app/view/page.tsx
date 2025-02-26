@@ -21,7 +21,7 @@ export default function View({}) {
 
   return (
     <main>
-      <div className="bg-gray-950 h-screen relative font-playfair">
+      <div className="bg-gray-950 h-screen relative">
         <div
           style={{
             backgroundImage: `url(${mediaUrl})`,
