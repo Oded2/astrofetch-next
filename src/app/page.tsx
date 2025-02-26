@@ -1,20 +1,15 @@
 "use client";
 
 import { DatePicker } from "@/components/Inputs";
-import { addParams, formatDateISO } from "@/lib/helpers";
+import { formatDateISO } from "@/lib/helpers";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const today = new Date();
 const minDate = new Date("1995-06-16");
 
 export default function Home() {
   const [date, setDate] = useState<Date>(today);
-  const [origin, setOrigin] = useState("");
-
-  useEffect(() => {
-    setOrigin(window.origin);
-  }, []);
 
   return (
     <div
