@@ -35,15 +35,13 @@ export default function Home() {
           <button className="btn btn-primary">Date Range</button>
           <div className="divider">OR</div>
           <div className="join">
-            {load && (
-              <DatePicker
-                value={date}
-                setValue={setDate}
-                min={minDate}
-                max={today}
-                join
-              ></DatePicker>
-            )}
+            <DatePicker
+              value={date}
+              setValue={setDate}
+              min={minDate}
+              max={today}
+              join
+            ></DatePicker>
           </div>
         </div>
       </div>
