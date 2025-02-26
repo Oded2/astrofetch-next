@@ -3,6 +3,7 @@
 import { Container } from "@/components/Container";
 import { addParams } from "@/lib/helpers";
 import { ApodData } from "@/lib/types";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -37,13 +38,15 @@ export default function View({}) {
                   {apodData?.title ?? loadingMessage}
                 </h1>
                 <p>{apodData?.explanation ?? loadingMessage}</p>
-                <ul className="mt-2 flex gap-1 flex-col">
-                  <li>
-                    &copy;{" "}
-                    {apodData?.copyright?.replaceAll("\\n", "") ??
-                      loadingMessage}
-                  </li>
-                  <li>
+                <div className="mt-2 flex flex-col gap-2">
+                  {apodData?.copyright && (
+                    <span>
+                      &copy;&nbsp;
+                      {apodData?.copyright?.replaceAll("\\n", "") ??
+                        loadingMessage}
+                    </span>
+                  )}
+                  <span>
                     {apodData &&
                       new Date(apodData.date).toLocaleString("en-US", {
                         day: "numeric",
@@ -51,13 +54,18 @@ export default function View({}) {
                         month: "long",
                         year: "numeric",
                       })}
-                  </li>
-                </ul>
+                  </span>
+                  <div>
+                    <Link href="/" className="btn btn-neutral">
+                      Home
+                    </Link>
+                  </div>
+                </div>
               </div>
               <img
                 src={mediaUrl}
                 alt={apodData?.title ?? "Blank"}
-                className="max-h-full rounded-lg"
+                className="max-h-full rounded-lg object-contain max-w-3xl xl:max-w-4xl 2xl:max-w-5xl shadow"
               />
             </div>
           </Container>
