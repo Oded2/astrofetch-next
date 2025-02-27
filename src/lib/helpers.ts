@@ -18,3 +18,7 @@ export function formatDateISO(date: Date): string {
     .toString()
     .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
 }
+
+export function generateRandomId(): string {
+  return Math.random().toString(36).substring(2, 15);
+}

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { DayPicker } from "react-day-picker";
 import clsx from "clsx";
+import { generateRandomId } from "@/lib/helpers";
 
 interface Props<T> {
   value: T;
@@ -21,6 +22,7 @@ export function DatePicker({
   footer = "",
 }: Props<Date>) {
   const [load, setLoad] = useState(false);
+  const id = `datepicker-${generateRandomId()}`;
   useEffect(() => {
     setLoad(true);
   }, []);
@@ -28,7 +30,7 @@ export function DatePicker({
     <>
       {load && (
         <button
-          popoverTarget="rdp-popover"
+          popoverTarget={id}
           className={clsx("input cursor-pointer", join && "join-item")}
           style={{ anchorName: "--rdp" } as React.CSSProperties}
         >
@@ -38,7 +40,7 @@ export function DatePicker({
 
       <div
         popover="auto"
-        id="rdp-popover"
+        id={id}
         className="dropdown"
         style={{ positionAnchor: "--rdp" } as React.CSSProperties}
       >

@@ -53,7 +53,7 @@ export default function Range() {
             <span className="label">FROM</span>
             <DatePicker value={from} setValue={setFrom}></DatePicker>
             <span className="label">TO</span>
-            <DatePicker value={to} setValue={setTo}></DatePicker>{" "}
+            <DatePicker value={to} setValue={setTo}></DatePicker>
             <button onClick={fetchData} className="btn btn-primary">
               {inProgress && <span className="loading loading-spinner"></span>}
               {!inProgress && <span>Fetch</span>}

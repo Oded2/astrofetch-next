@@ -1,12 +1,12 @@
 "use client";
 
 import { DatePicker } from "@/components/Inputs";
+import { minDate } from "@/lib/constants";
 import { formatDateISO } from "@/lib/helpers";
 import Link from "next/link";
 import { useState } from "react";
 
 const today = new Date();
-const minDate = new Date("1995-06-16");
 
 export default function Home() {
   const [date, setDate] = useState<Date>(today);
