@@ -1,3 +1,4 @@
+import { formatDate } from "@/lib/helpers";
 import type { ApodData } from "@/lib/types";
 import Image from "next/image";
 
@@ -21,6 +22,7 @@ export function ApodCard({ data, onView, id = "apodCard" }: Props) {
       </figure>
       <div className="card-body">
         <h2 className="card-title">{data.title}</h2>
+        <h3 className="font-medium ">{formatDate(new Date(data.date))}</h3>
         <p className="line-clamp-12">{data.explanation}</p>
         <div className="card-actions justify-end mt-1">
           <button onClick={onView} className="btn btn-primary">
