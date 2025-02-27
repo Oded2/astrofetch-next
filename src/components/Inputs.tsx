@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { DayPicker } from "react-day-picker";
 import clsx from "clsx";
@@ -22,8 +23,9 @@ export function DatePicker({
   footer = "",
 }: Props<Date>) {
   const [load, setLoad] = useState(false);
-  const id = `datepicker-${generateRandomId()}`;
+  const [id, setId] = useState("datepicker");
   useEffect(() => {
+    setId(`datepicker-${generateRandomId()}`);
     setLoad(true);
   }, []);
   return (

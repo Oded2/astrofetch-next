@@ -4,6 +4,7 @@ import { ApodCard } from "@/components/ApodCard";
 import { Container } from "@/components/Container";
 import { DatePicker } from "@/components/Inputs";
 import { Viewer } from "@/components/Viewer";
+import { minDate } from "@/lib/constants";
 import { addParams, formatDateISO } from "@/lib/helpers";
 import type { ApodData } from "@/lib/types";
 import { useState } from "react";
@@ -51,7 +52,11 @@ export default function Range() {
         <Container>
           <div className="my-10 flex gap-2 max-w-sm">
             <span className="label">FROM</span>
-            <DatePicker value={from} setValue={setFrom}></DatePicker>
+            <DatePicker
+              value={from}
+              setValue={setFrom}
+              min={minDate}
+            ></DatePicker>
             <span className="label">TO</span>
             <DatePicker value={to} setValue={setTo}></DatePicker>
             <button onClick={fetchData} className="btn btn-primary">
