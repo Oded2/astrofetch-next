@@ -43,7 +43,7 @@ export function Viewer({ apodData, onBack }: Props) {
                   )}
                   <div>
                     {onBack && (
-                      <button onClick={onBack} className="btn btn-primary">
+                      <button onClick={onBack} className="btn btn-neutral">
                         Back
                       </button>
                     )}
