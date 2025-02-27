@@ -7,6 +7,7 @@ import { Viewer } from "@/components/Viewer";
 import { minDate } from "@/lib/constants";
 import { addParams, formatDate, formatDateISO } from "@/lib/helpers";
 import type { ApodData } from "@/lib/types";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Range() {
@@ -60,7 +61,10 @@ export default function Range() {
     <div>
       {!current && (
         <Container>
-          <div className="mt-10 flex gap-2 max-w-sm">
+          <Link href="/" className="btn">
+            Home
+          </Link>
+          <div className="mt-2 flex gap-2 max-w-sm">
             <span className="label">FROM</span>
             <DatePicker
               value={from}

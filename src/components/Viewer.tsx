@@ -78,8 +78,8 @@ export function Viewer({ apodData, onBack }: Props) {
                   src={apodData.url}
                   alt={apodData?.title ?? "Blank"}
                   className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl shadow"
-                  width={1920}
-                  height={1080}
+                  width={2500}
+                  height={2500}
                   priority
                 />
               )}
