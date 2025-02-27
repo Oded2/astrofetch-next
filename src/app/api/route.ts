@@ -18,13 +18,18 @@ export async function GET(request: Request) {
     thumbs: "true",
     ...params,
   });
+  console.log("Fetching external API");
   const response = await fetch(url);
   if (!response.ok)
     return NextResponse.json(
       { error: "API Error" },
       { status: response.status, statusText: response.statusText }
     );
-  const remaining = response.headers.get("x-ratelimit-remaining") ?? "Unknown";
-  console.log(`NASA API: ${remaining} remaining requests`);
+  const remaining = response.headers.get("x-ratelimit-remaining");
+  console.log(
+    `NASA API: ${
+      remaining ? parseInt(remaining).toLocaleString() : "NaN"
+    } remaining requests.`
+  );
   return NextResponse.json(await response.json());
 }
