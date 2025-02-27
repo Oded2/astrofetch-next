@@ -21,5 +21,5 @@ export default function View() {
       .then((json) => setApodData(json));
   }, [endpoint]);
 
-  return Viewer({ apodData: apodData });
+  return <Viewer apodData={apodData}></Viewer>;
 }
