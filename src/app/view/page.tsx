@@ -1,14 +1,12 @@
 "use client";
 
-import { Container } from "@/components/Container";
 import { Viewer } from "@/components/Viewer";
 import { addParams } from "@/lib/helpers";
 import type { ApodData } from "@/lib/types";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState, useMemo, Suspense } from "react";
+import { useEffect, useState, useMemo } from "react";
 
-function View() {
+export default function View() {
   const [apodData, setApodData] = useState<ApodData | null>(null);
   const params = useSearchParams();
   const date = params?.get("date") ?? "2025-01-01";
@@ -24,12 +22,4 @@ function View() {
   }, [endpoint]);
 
   return Viewer({ apodData: apodData });
-}
-
-export default function Page() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <View />
-    </Suspense>
-  );
 }
