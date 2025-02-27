@@ -10,6 +10,12 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/apod/image/**", // Allows any image under /apod/image/
       },
+      {
+        protocol: "https",
+        hostname: "img.youtube.com",
+        port: "",
+        pathname: "/vi/**/0.jpg", // Allows YouTube video thumbnails
+      },
     ],
   },
 };
