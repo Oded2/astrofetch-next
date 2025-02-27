@@ -5,7 +5,7 @@ import { Container } from "@/components/Container";
 import { DatePicker } from "@/components/Inputs";
 import { Viewer } from "@/components/Viewer";
 import { minDate } from "@/lib/constants";
-import { addParams, formatDateISO } from "@/lib/helpers";
+import { addParams, formatDate, formatDateISO } from "@/lib/helpers";
 import type { ApodData } from "@/lib/types";
 import { useEffect, useState } from "react";
 
@@ -80,9 +80,8 @@ export default function Range() {
               {!inProgress && <span>Fetch</span>}
             </button>
           </div>
-          <span className="italic font-light text-sm">{`Dates must be between ${minDate.toLocaleString(
-            "en-US",
-            { day: "numeric", month: "long", year: "numeric" }
+          <span className="italic font-light text-sm">{`Dates must be between ${formatDate(
+            minDate
           )} and today`}</span>
           <div className="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-8 gap-y-8 mt-10">
             {apods.map((item, index) => {

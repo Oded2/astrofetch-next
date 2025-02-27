@@ -13,6 +13,14 @@ export function addParams(
   return `${link}?${searchParams.toString()}`;
 }
 
+export function formatDate(date: Date): string {
+  return date.toLocaleString("en-US", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
 export function formatDateISO(date: Date): string {
   return `${date.getFullYear().toString()}-${(date.getMonth() + 1)
     .toString()

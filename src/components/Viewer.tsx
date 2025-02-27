@@ -2,6 +2,7 @@ import type { ApodData } from "@/lib/types";
 import { Container } from "./Container";
 import Link from "next/link";
 import Image from "next/image";
+import { formatDate } from "@/lib/helpers";
 
 interface Props {
   apodData: ApodData | null;
@@ -37,15 +38,9 @@ export function Viewer({ apodData, onBack }: Props) {
                         loadingMessage}
                     </span>
                   )}
-                  <span>
-                    {apodData &&
-                      new Date(apodData.date).toLocaleString("en-US", {
-                        day: "numeric",
-                        weekday: "long",
-                        month: "long",
-                        year: "numeric",
-                      })}
-                  </span>
+                  {apodData && (
+                    <span>{formatDate(new Date(apodData.date))}</span>
+                  )}
                   <div>
                     {onBack && (
                       <button onClick={onBack} className="btn btn-primary">
