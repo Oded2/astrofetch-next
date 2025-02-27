@@ -7,7 +7,7 @@ import { Viewer } from "@/components/Viewer";
 import { minDate } from "@/lib/constants";
 import { addParams, formatDateISO } from "@/lib/helpers";
 import type { ApodData } from "@/lib/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Range() {
   const today = new Date();
@@ -17,6 +17,7 @@ export default function Range() {
   const [apods, setApods] = useState<ApodData[]>([]);
   const [inProgress, setInProgress] = useState(false);
   const [current, setCurrent] = useState<ApodData | null>(null);
+  const [returnId, setReturnId] = useState("");
 
   fromPointer.setDate(today.getDate() - 14);
 
@@ -40,11 +41,20 @@ export default function Range() {
 
   const onView = (index: number) => {
     setCurrent(apods[index]);
+    setReturnId(`apod-${index}`);
   };
 
   const onBack = () => {
     setCurrent(null);
   };
+
+  useEffect(() => {
+    if (current == null) {
+      document
+        .getElementById(returnId)
+        ?.scrollIntoView({ behavior: "instant", block: "center" });
+    }
+  }, [current]);
 
   return (
     <div>
@@ -74,13 +84,14 @@ export default function Range() {
             "en-US",
             { day: "numeric", month: "long", year: "numeric" }
           )} and today`}</span>
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 mt-10">
+          <div className="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-8 gap-y-8 mt-10">
             {apods.map((item, index) => {
               return (
                 <ApodCard
                   key={index}
                   data={item}
                   onView={() => onView(index)}
+                  id={`apod-${index}`}
                 ></ApodCard>
               );
             })}
