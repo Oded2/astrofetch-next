@@ -3,6 +3,7 @@ import { Container } from "./Container";
 import Link from "next/link";
 import Image from "next/image";
 import { formatDate } from "@/lib/helpers";
+import { Dropdown } from "./Dropdown";
 
 interface Props {
   apodData: ApodData | null;
@@ -11,6 +12,7 @@ interface Props {
 
 export function Viewer({ apodData, onBack }: Props) {
   const loadingMessage = "Loading...";
+
   return (
     <main>
       <div className="bg-gray-950 min-h-screen relative">
@@ -41,16 +43,32 @@ export function Viewer({ apodData, onBack }: Props) {
                   {apodData && (
                     <span>{formatDate(new Date(apodData.date))}</span>
                   )}
-                  <div>
+                  <div className="flex gap-2">
                     {onBack && (
-                      <button onClick={onBack} className="btn btn-neutral">
+                      <button
+                        onClick={onBack}
+                        className="btn btn-neutral join-item"
+                      >
                         Back
                       </button>
                     )}
                     {!onBack && (
-                      <Link href="/" className="btn btn-neutral">
+                      <Link href="/" className="btn btn-neutral join-item">
                         Home
                       </Link>
+                    )}
+                    {apodData && (
+                      <Dropdown label="Options">
+                        <li>
+                          <a
+                            href={apodData.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Open media
+                          </a>
+                        </li>
+                      </Dropdown>
                     )}
                   </div>
                 </div>
