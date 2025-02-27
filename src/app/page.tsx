@@ -15,8 +15,7 @@ export default function Home() {
     <div
       className="hero min-h-screen"
       style={{
-        backgroundImage:
-          "url(https://upload.wikimedia.org/wikipedia/commons/4/43/ESO-VLT-Laser-phot-33a-07.jpg)",
+        backgroundImage: "url(images/background.jpg)",
       }}
     >
       <div className="hero-overlay"></div>
