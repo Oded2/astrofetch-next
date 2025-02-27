@@ -49,12 +49,12 @@ export default function Range() {
   };
 
   useEffect(() => {
-    if (current == null) {
+    if (!current) {
       document
         .getElementById(returnId)
         ?.scrollIntoView({ behavior: "instant", block: "center" });
     }
-  }, [current]);
+  }, [current, returnId]);
 
   return (
     <div>

@@ -4,9 +4,9 @@ import { Viewer } from "@/components/Viewer";
 import { addParams } from "@/lib/helpers";
 import type { ApodData } from "@/lib/types";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, Suspense } from "react";
 
-export default function View() {
+function View() {
   const [apodData, setApodData] = useState<ApodData | null>(null);
   const params = useSearchParams();
   const date = params?.get("date") ?? "2025-01-01";
@@ -22,4 +22,12 @@ export default function View() {
   }, [endpoint]);
 
   return <Viewer apodData={apodData}></Viewer>;
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<span>Loading</span>}>
+      <View></View>
+    </Suspense>
+  );
 }
