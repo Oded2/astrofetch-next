@@ -37,7 +37,7 @@ export default function Range() {
     setInProgress(false);
   };
 
-  const onView = (index: number, ref: HTMLDivElement | null = null) => {
+  const onView = (index: number) => {
     setCurrent(apods[index]);
   };
 
