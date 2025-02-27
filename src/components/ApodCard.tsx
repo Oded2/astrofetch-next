@@ -16,6 +16,7 @@ export function ApodCard({ data, onView, id = "apodCard" }: Props) {
           alt={data.title}
           className="object-cover"
           fill
+          sizes="95vw"
         ></Image>
       </figure>
       <div className="card-body">

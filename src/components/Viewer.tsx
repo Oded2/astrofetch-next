@@ -1,6 +1,7 @@
 import type { ApodData } from "@/lib/types";
 import { Container } from "./Container";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Props {
   apodData: ApodData | null;
@@ -60,10 +61,13 @@ export function Viewer({ apodData, onBack }: Props) {
                 </div>
               </div>
               {apodData && apodData.media_type === "image" && (
-                <img
+                <Image
                   src={apodData.url}
                   alt={apodData?.title ?? "Blank"}
                   className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl shadow"
+                  width={1920}
+                  height={1080}
+                  priority
                 />
               )}
               {apodData && apodData.media_type === "video" && (
