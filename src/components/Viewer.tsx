@@ -4,9 +4,10 @@ import Link from "next/link";
 
 interface Props {
   apodData: ApodData | null;
+  onBack?: () => void;
 }
 
-export function Viewer({ apodData }: Props) {
+export function Viewer({ apodData, onBack }: Props) {
   const loadingMessage = "Loading...";
   return (
     <main>
@@ -45,9 +46,16 @@ export function Viewer({ apodData }: Props) {
                       })}
                   </span>
                   <div>
-                    <Link href="/" className="btn btn-neutral">
-                      Home
-                    </Link>
+                    {onBack && (
+                      <button onClick={onBack} className="btn btn-primary">
+                        Back
+                      </button>
+                    )}
+                    {!onBack && (
+                      <Link href="/" className="btn btn-neutral">
+                        Home
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>
