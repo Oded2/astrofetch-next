@@ -50,21 +50,31 @@ export default function Range() {
     <div>
       {!current && (
         <Container>
-          <div className="my-10 flex gap-2 max-w-sm">
+          <div className="mt-10 flex gap-2 max-w-sm">
             <span className="label">FROM</span>
             <DatePicker
               value={from}
               setValue={setFrom}
               min={minDate}
+              max={to}
             ></DatePicker>
             <span className="label">TO</span>
-            <DatePicker value={to} setValue={setTo}></DatePicker>
+            <DatePicker
+              value={to}
+              setValue={setTo}
+              min={from}
+              max={today}
+            ></DatePicker>
             <button onClick={fetchData} className="btn btn-primary">
               {inProgress && <span className="loading loading-spinner"></span>}
               {!inProgress && <span>Fetch</span>}
             </button>
           </div>
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
+          <span className="italic font-light text-sm">{`Dates must be between ${minDate.toLocaleString(
+            "en-US",
+            { day: "numeric", month: "numeric", year: "numeric" }
+          )} and today`}</span>
+          <div className="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 mt-10">
             {apods.map((item, index) => {
               return (
                 <ApodCard
