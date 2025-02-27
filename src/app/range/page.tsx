@@ -72,7 +72,7 @@ export default function Range() {
           </div>
           <span className="italic font-light text-sm">{`Dates must be between ${minDate.toLocaleString(
             "en-US",
-            { day: "numeric", month: "numeric", year: "numeric" }
+            { day: "numeric", month: "long", year: "numeric" }
           )} and today`}</span>
           <div className="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 mt-10">
             {apods.map((item, index) => {
