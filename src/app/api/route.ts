@@ -1,4 +1,4 @@
-import { addParams, getEnv } from "@/lib/helpers";
+import { addParams, getEnv, validateDates } from "@/lib/helpers";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -18,6 +18,9 @@ export async function GET(request: Request) {
     thumbs: "true",
     ...params,
   });
+  const valid = validateDates(new Date(start), new Date(end));
+  if (valid.length > 0)
+    return NextResponse.json({ error: valid }, { status: 422 });
   console.log("Fetching external API");
   const response = await fetch(url);
   if (!response.ok)

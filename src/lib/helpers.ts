@@ -30,3 +30,12 @@ export function formatDateISO(date: Date): string {
 export function generateRandomId(): string {
   return Math.random().toString(36).substring(2, 15);
 }
+
+export function validateDates(from: Date, to: Date): string {
+  // Returns an empty string if valid
+  const difference = to.getTime() - from.getTime();
+  if (difference < 0) return "Start date cannot be after end date";
+  if (to.getFullYear() - from.getFullYear() > 1)
+    return "Date range must be less than 2 years";
+  return "";
+}
