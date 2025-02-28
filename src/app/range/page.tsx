@@ -89,58 +89,55 @@ export default function Range() {
 
   return (
     <>
-      <div>
-        {!current && (
-          <Container>
-            <Link href="/" className="btn">
-              Home
-            </Link>
-            <div className="mt-2 flex items-center gap-2">
-              <span className="label">FROM</span>
-              <DatePicker
-                value={from}
-                setValue={setFrom}
-                min={minDate}
-                max={new Date()}
-              ></DatePicker>
-              <span className="label">TO</span>
-              <DatePicker
-                value={to}
-                setValue={setTo}
-                min={minDate}
-                max={new Date()}
-              ></DatePicker>
-              <button onClick={fetchData} className="btn btn-primary">
-                {inProgress && (
-                  <span className="loading loading-spinner"></span>
-                )}
-                {!inProgress && <span>Fetch</span>}
-              </button>
-              <CheckBox
-                value={dynamicTo}
-                setValue={setDynamicTo}
-                label="Dynamically update range"
-              ></CheckBox>
-            </div>
-            <span className="italic font-light text-sm">{`Dates must be between ${formatDate(
-              minDate
-            )} and today`}</span>
-            <div className="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-8 gap-y-8 mt-10">
-              {apods.map((item, index) => {
-                return (
-                  <ApodCard
-                    key={index}
-                    data={item}
-                    onView={() => onView(index)}
-                    id={`apod-${index}`}
-                  ></ApodCard>
-                );
-              })}
-            </div>
-          </Container>
-        )}
-        {current && <Viewer apodData={current} onBack={onBack}></Viewer>}
-      </div>
+      {!current && (
+        <Container>
+          <Link href="/" className="btn">
+            Home
+          </Link>
+          <div className="mt-2 flex items-center gap-2">
+            <span className="label">FROM</span>
+            <DatePicker
+              value={from}
+              setValue={setFrom}
+              min={minDate}
+              max={new Date()}
+            ></DatePicker>
+            <span className="label">TO</span>
+            <DatePicker
+              value={to}
+              setValue={setTo}
+              min={minDate}
+              max={new Date()}
+            ></DatePicker>
+            <button onClick={fetchData} className="btn btn-primary">
+              {inProgress && <span className="loading loading-spinner"></span>}
+              {!inProgress && <span>Fetch</span>}
+            </button>
+            <CheckBox
+              value={dynamicTo}
+              setValue={setDynamicTo}
+              label="Dynamically update range"
+            ></CheckBox>
+          </div>
+          <span className="italic font-light text-sm">{`Dates must be between ${formatDate(
+            minDate
+          )} and today`}</span>
+          <div className="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-8 gap-y-8 mt-10">
+            {apods.map((item, index) => {
+              return (
+                <ApodCard
+                  key={index}
+                  data={item}
+                  onView={() => onView(index)}
+                  id={`apod-${index}`}
+                ></ApodCard>
+              );
+            })}
+          </div>
+        </Container>
+      )}
+      {current && <Viewer apodData={current} onBack={onBack}></Viewer>}
+
       <Modal title="Error" ref={modal}>
         <p>{errorMessage}</p>
       </Modal>
