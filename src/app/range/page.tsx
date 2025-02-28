@@ -11,16 +11,17 @@ import type { ApodData } from "@/lib/types";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-const todaySafe = new Date();
-todaySafe.setMinutes(
-  todaySafe.getMinutes() + todaySafe.getTimezoneOffset() - 60
-);
+const createSafeDate = (value?: number | string | Date) => {
+  const date = value ? new Date(value) : new Date();
+  date.setMinutes(date.getMinutes() + date.getTimezoneOffset() - 60);
+  return date;
+};
+
+const todaySafe = createSafeDate();
 
 export default function Range() {
-  const fromPointer = new Date();
-  fromPointer.setDate(new Date().getDate() - 14);
-  const [from, setFrom] = useState(fromPointer);
-  const [to, setTo] = useState(new Date());
+  const [from, setFrom] = useState(createSafeDate());
+  const [to, setTo] = useState(createSafeDate());
   const [apods, setApods] = useState<ApodData[]>([]);
   const [inProgress, setInProgress] = useState(false);
   const [current, setCurrent] = useState<ApodData | null>(null);
@@ -28,6 +29,8 @@ export default function Range() {
   const modal = useRef<HTMLDialogElement>(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [dynamicTo, setDynamicTo] = useState(true);
+
+  from.setDate(to.getDate() - 14);
 
   const fetchData = async () => {
     if (inProgress) return;
@@ -79,8 +82,8 @@ export default function Range() {
 
   useEffect(() => {
     if (dynamicTo) {
-      const today = new Date();
-      const temp = new Date(from);
+      const today = createSafeDate();
+      const temp = createSafeDate(from);
       temp.setMonth(from.getMonth() + 1);
       setTo(temp > today ? today : temp);
     }
@@ -90,10 +93,13 @@ export default function Range() {
     <>
       {!current && (
         <Container>
-          <Link href="/" className="btn">
+          <Link href="/" className="btn hidden sm:inline-flex">
             Home
           </Link>
           <div className="mt-2 flex flex-col sm:flex-row items-center gap-2">
+            <Link href="/" className="btn sm:hidden">
+              Home
+            </Link>
             <span className="label">FROM</span>
             <DatePicker
               value={from}

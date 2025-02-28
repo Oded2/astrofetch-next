@@ -11,7 +11,7 @@ interface Props {
 export function ApodCard({ data, onView, id = "apodCard" }: Props) {
   return (
     <div
-      className="card bg-base-300 w-96 shadow-sm h-full max-h-[80vh] relative"
+      className="card bg-base-300 w-96 shadow-sm h-full max-h-[80vh] relative overflow-auto"
       id={id}
     >
       <figure className="relative aspect-square">
