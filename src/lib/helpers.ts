@@ -42,7 +42,7 @@ export function validateDates(from: Date, to: Date): string {
   if (from > to) return "Start date cannot be after end date";
   if (to.getFullYear() - from.getFullYear() > 1)
     return "Date range must be less than 2 years";
-  today.setMinutes(today.getMinutes() + today.getTimezoneOffset());
+  today.setMinutes(today.getMinutes() + today.getTimezoneOffset() - 60);
   if (sameDate && today.getDate() != to.getDate())
     return "Today's APOD isn't available yet";
   return "";
