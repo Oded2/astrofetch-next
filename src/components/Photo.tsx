@@ -24,7 +24,7 @@ export function Photo({ src, alt, className = "" }: Props) {
       setWidth(width);
       setHeight(height);
     });
-  }, []);
+  }, [src]);
   return (
     <NextImage
       src={src}
