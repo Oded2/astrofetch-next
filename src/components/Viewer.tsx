@@ -8,10 +8,11 @@ import Image from "next/image";
 
 interface Props {
   apodData: ApodData | null;
+  priority?: boolean;
   onBack?: () => void;
 }
 
-export function Viewer({ apodData, onBack }: Props) {
+export function Viewer({ apodData, priority, onBack }: Props) {
   const loadingMessage = "Loading...";
   return (
     <main>
@@ -79,6 +80,7 @@ export function Viewer({ apodData, onBack }: Props) {
                   src={apodData.url}
                   alt={apodData.title}
                   className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl"
+                  priority={priority}
                 ></Photo>
               )}
               {apodData?.url && apodData.media_type === "video" && (

@@ -21,7 +21,7 @@ function View() {
       .then((json) => setApodData(json));
   }, [endpoint]);
 
-  return <Viewer apodData={apodData}></Viewer>;
+  return <Viewer apodData={apodData} priority></Viewer>;
 }
 
 export default function Page() {

@@ -5,6 +5,7 @@ interface Props {
   src: string;
   alt: string;
   className?: string;
+  priority?: boolean;
 }
 
 function getImageSize(url: string): Promise<{ width: number; height: number }> {
@@ -16,7 +17,7 @@ function getImageSize(url: string): Promise<{ width: number; height: number }> {
   });
 }
 
-export function Photo({ src, alt, className = "" }: Props) {
+export function Photo({ src, alt, className = "", priority }: Props) {
   const [width, setWidth] = useState(NaN);
   const [height, setHeight] = useState(NaN);
   useEffect(() => {
@@ -34,7 +35,7 @@ export function Photo({ src, alt, className = "" }: Props) {
           className={className}
           width={width}
           height={height}
-          priority
+          priority={priority}
         ></NextImage>
       )}
     </>
