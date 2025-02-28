@@ -34,17 +34,16 @@ export function DatePicker({
         <button
           popoverTarget={id}
           className={clsx("input cursor-pointer", join && "join-item")}
-          style={{ anchorName: "--rdp" } as React.CSSProperties}
+          style={{ anchorName: `--anchor-${id}` } as React.CSSProperties}
         >
           {value ? value.toLocaleDateString() : "Pick a date"}
         </button>
       )}
-
       <div
         popover="auto"
         id={id}
         className="dropdown"
-        style={{ positionAnchor: "--rdp" } as React.CSSProperties}
+        style={{ positionAnchor: `--anchor-${id}` } as React.CSSProperties}
       >
         <DayPicker
           hidden={min ? { before: min, after: max } : []}
