@@ -78,14 +78,14 @@ export function Viewer({ apodData, onBack }: Props) {
                 <Photo
                   src={apodData.url}
                   alt={apodData.title}
-                  className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl shadow"
+                  className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl"
                 ></Photo>
               )}
               {apodData?.url && apodData.media_type === "video" && (
                 <iframe
                   src={apodData.url}
                   title={apodData.title}
-                  className="aspect-video h-96 w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl shadow my-auto"
+                  className="aspect-video h-96 w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl my-auto"
                   allowFullScreen
                 />
               )}
@@ -93,7 +93,7 @@ export function Viewer({ apodData, onBack }: Props) {
                 <Image
                   src="/images/no-image.jpg"
                   alt="No image"
-                  className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl shadow"
+                  className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl"
                   width={400}
                   height={400}
                   priority
