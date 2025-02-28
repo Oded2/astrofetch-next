@@ -30,14 +30,3 @@ export function formatDateISO(date: Date): string {
 export function generateRandomId(): string {
   return Math.random().toString(36).substring(2, 15);
 }
-
-export function getImageSize(
-  url: string
-): Promise<{ width: number; height: number }> {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.src = url;
-    img.onload = () => resolve({ width: img.width, height: img.height });
-    img.onerror = (err) => reject(err);
-  });
-}

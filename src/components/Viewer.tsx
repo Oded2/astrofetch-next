@@ -1,10 +1,9 @@
 import type { ApodData } from "@/lib/types";
 import { Container } from "./Container";
 import Link from "next/link";
-import Image from "next/image";
-import { formatDate, getImageSize } from "@/lib/helpers";
+import { formatDate } from "@/lib/helpers";
 import { Dropdown } from "./Dropdown";
-import { useEffect, useState } from "react";
+import { Photo } from "./Photo";
 
 interface Props {
   apodData: ApodData | null;
@@ -13,17 +12,6 @@ interface Props {
 
 export function Viewer({ apodData, onBack }: Props) {
   const loadingMessage = "Loading...";
-  const [width, setWidth] = useState(100);
-  const [height, setHeight] = useState(100);
-  useEffect(() => {
-    if (apodData) {
-      getImageSize(apodData.url).then(({ width, height }) => {
-        setWidth(width);
-        setHeight(height);
-      });
-    }
-  }, [apodData]);
-
   return (
     <main>
       <div className="bg-gray-950 min-h-screen relative">
@@ -85,14 +73,11 @@ export function Viewer({ apodData, onBack }: Props) {
                 </div>
               </div>
               {apodData && apodData.media_type === "image" && (
-                <Image
+                <Photo
                   src={apodData.url}
                   alt={apodData?.title ?? "Blank"}
                   className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl shadow"
-                  width={width}
-                  height={height}
-                  priority
-                />
+                ></Photo>
               )}
               {apodData && apodData.media_type === "video" && (
                 <iframe
