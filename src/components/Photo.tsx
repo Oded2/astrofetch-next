@@ -17,8 +17,8 @@ function getImageSize(url: string): Promise<{ width: number; height: number }> {
 }
 
 export function Photo({ src, alt, className = "" }: Props) {
-  const [width, setWidth] = useState(100);
-  const [height, setHeight] = useState(100);
+  const [width, setWidth] = useState(NaN);
+  const [height, setHeight] = useState(NaN);
   useEffect(() => {
     getImageSize(src).then(({ width, height }) => {
       setWidth(width);
@@ -26,13 +26,16 @@ export function Photo({ src, alt, className = "" }: Props) {
     });
   }, [src]);
   return (
-    <NextImage
-      src={src}
-      alt={alt}
-      className={className}
-      width={width}
-      height={height}
-      priority
-    ></NextImage>
+    <>
+      {!isNaN(width) && !isNaN(height) && (
+        <NextImage
+          src={src}
+          alt={alt}
+          className={className}
+          width={width}
+          height={height}
+        ></NextImage>
+      )}
+    </>
   );
 }
