@@ -1,7 +1,7 @@
 import type { ApodData } from "@/lib/types";
 import { Container } from "./Container";
 import Link from "next/link";
-import { formatDate } from "@/lib/helpers";
+import { addParams, formatDate } from "@/lib/helpers";
 import { Dropdown } from "./Dropdown";
 import { Photo } from "./Photo";
 import Image from "next/image";
@@ -14,6 +14,10 @@ interface Props {
 
 export function Viewer({ apodData, priority, onBack }: Props) {
   const loadingMessage = "Loading...";
+  const url = addParams("/api/image", {
+    imageUrl: apodData?.url ?? "",
+    filename: apodData?.title ?? "Image",
+  });
   return (
     <main>
       <div className="bg-gray-950 min-h-screen relative">
@@ -57,19 +61,20 @@ export function Viewer({ apodData, priority, onBack }: Props) {
                         Home
                       </Link>
                     )}
-                    {apodData && (
+                    {apodData?.media_type === "image" && (
                       <Dropdown label="Options">
-                        {apodData.url && (
-                          <li>
-                            <a
-                              href={apodData.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              Open media
-                            </a>
-                          </li>
-                        )}
+                        <li>
+                          <a
+                            href={apodData.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Open Image
+                          </a>
+                          <a href={url} download>
+                            Download Image
+                          </a>
+                        </li>
                       </Dropdown>
                     )}
                   </div>

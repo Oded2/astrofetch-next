@@ -38,13 +38,13 @@ export default function Range() {
       return;
     }
     setInProgress(true);
-    const endpoint = addParams("/api", {
+    const endpoint = addParams("/api/apod", {
       start: formatDateISO(from),
       end: formatDateISO(to),
     });
     const response = await fetch(endpoint);
     if (!response.ok) {
-      console.error(response.status, response.statusText);
+      setErrorMessage("Error fetching API");
       setInProgress(false);
       return;
     }

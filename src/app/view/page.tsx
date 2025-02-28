@@ -11,7 +11,7 @@ function View() {
   const params = useSearchParams();
   const date = params?.get("date") ?? "2025-01-01";
   const endpoint = useMemo(
-    () => addParams("/api", { start: date, end: date }),
+    () => addParams("/api/apod", { start: date, end: date }),
     [date]
   );
 
