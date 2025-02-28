@@ -34,6 +34,7 @@ export function Photo({ src, alt, className = "" }: Props) {
           className={className}
           width={width}
           height={height}
+          priority
         ></NextImage>
       )}
     </>
