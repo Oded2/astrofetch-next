@@ -29,7 +29,7 @@ export function Viewer({ apodData, priority, onBack }: Props) {
             className="absolute inset-0 bg-cover bg-center before:absolute before:inset-0 before:backdrop-blur-lg before:bg-black/30 opacity-30"
           />
         )}
-        <div className="relative min-h-screen h-screen">
+        <div className="relative min-h-screen lg:h-screen">
           <Container className="h-full">
             <div className="flex flex-col-reverse lg:flex-row overflow-hidden h-full justify-between gap-8 lg:py-10">
               <div className="my-auto">

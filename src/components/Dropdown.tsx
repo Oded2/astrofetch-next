@@ -7,7 +7,7 @@ interface Props {
 
 export function Dropdown({ label, children }: Props) {
   return (
-    <div className="dropdown join-item">
+    <div className="dropdown dropdown-top lg:dropdown-bottom join-item">
       <div tabIndex={0} role="button" className="btn btn-neutral">
         {label}
       </div>
