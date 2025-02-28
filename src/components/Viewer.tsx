@@ -2,8 +2,9 @@ import type { ApodData } from "@/lib/types";
 import { Container } from "./Container";
 import Link from "next/link";
 import Image from "next/image";
-import { formatDate } from "@/lib/helpers";
+import { formatDate, getImageSize } from "@/lib/helpers";
 import { Dropdown } from "./Dropdown";
+import { useEffect, useState } from "react";
 
 interface Props {
   apodData: ApodData | null;
@@ -12,6 +13,16 @@ interface Props {
 
 export function Viewer({ apodData, onBack }: Props) {
   const loadingMessage = "Loading...";
+  const [width, setWidth] = useState(100);
+  const [height, setHeight] = useState(100);
+  useEffect(() => {
+    if (apodData) {
+      getImageSize(apodData.url).then(({ width, height }) => {
+        setWidth(width);
+        setHeight(height);
+      });
+    }
+  }, [apodData]);
 
   return (
     <main>
@@ -26,7 +37,7 @@ export function Viewer({ apodData, onBack }: Props) {
         )}
         <div className="relative min-h-screen h-screen">
           <Container className="h-full">
-            <div className="flex flex-col-reverse lg:flex-row overflow-hidden h-full justify-between gap-8">
+            <div className="flex flex-col-reverse lg:flex-row overflow-hidden h-full justify-between gap-8 lg:py-10">
               <div className="my-auto">
                 <h1 className="text-3xl font-bold mb-2">
                   {apodData?.title ?? loadingMessage}
@@ -78,8 +89,8 @@ export function Viewer({ apodData, onBack }: Props) {
                   src={apodData.url}
                   alt={apodData?.title ?? "Blank"}
                   className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl shadow"
-                  width={2500}
-                  height={2500}
+                  width={width}
+                  height={height}
                   priority
                 />
               )}
