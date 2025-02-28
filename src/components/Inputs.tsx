@@ -5,13 +5,13 @@ import { DayPicker } from "react-day-picker";
 import clsx from "clsx";
 import { generateRandomId } from "@/lib/helpers";
 
-interface Props<T> {
+interface Props<T, K> {
   value: T;
   setValue: (newValue: T) => void;
-  min?: T;
-  max?: T;
+  min?: K;
+  max?: K;
   join?: boolean;
-  footer?: string;
+  label?: string;
 }
 
 export function DatePicker({
@@ -20,8 +20,8 @@ export function DatePicker({
   min,
   max,
   join = false,
-  footer = "",
-}: Props<Date>) {
+  label = "",
+}: Props<Date, Date>) {
   const [load, setLoad] = useState(false);
   const [id, setId] = useState("datepicker");
   useEffect(() => {
@@ -29,7 +29,7 @@ export function DatePicker({
     setLoad(true);
   }, []);
   return (
-    <>
+    <div className="flex">
       {load && (
         <button
           popoverTarget={id}
@@ -47,7 +47,7 @@ export function DatePicker({
       >
         <DayPicker
           hidden={min ? { before: min, after: max } : []}
-          footer={<span className="px-4">{footer}</span>}
+          footer={<span className="px-4">{label}</span>}
           captionLayout="dropdown"
           className="react-day-picker"
           mode="single"
@@ -56,6 +56,27 @@ export function DatePicker({
           onSelect={setValue}
         />
       </div>
-    </>
+    </div>
+  );
+}
+
+export function CheckBox({
+  value,
+  setValue,
+  join,
+  label,
+}: Props<boolean, number>) {
+  return (
+    <fieldset className="fieldset px-2 py-1 border border-base-300 rounded-box h-full">
+      <label className="fieldset-label">
+        <input
+          type="checkbox"
+          defaultChecked={value}
+          className={clsx("checkbox", join && "join-item")}
+          onChange={() => setValue(!value)}
+        />
+        <span className="select-none">{label}</span>
+      </label>
+    </fieldset>
   );
 }

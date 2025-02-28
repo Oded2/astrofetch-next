@@ -37,8 +37,8 @@ export default function Home() {
               min={minDate}
               max={today}
               join
-              footer={`Choose any date from ${formatDate(minDate)} to today.`}
-            ></DatePicker>{" "}
+              label={`Choose any date from ${formatDate(minDate)} to today.`}
+            ></DatePicker>
             <Link
               href={{ pathname: "/view", query: { date: formatDateISO(date) } }}
               className="btn btn-primary join-item"

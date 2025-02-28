@@ -2,7 +2,7 @@
 
 import { ApodCard } from "@/components/ApodCard";
 import { Container } from "@/components/Container";
-import { DatePicker } from "@/components/Inputs";
+import { CheckBox, DatePicker } from "@/components/Inputs";
 import { Modal } from "@/components/Modal";
 import { Viewer } from "@/components/Viewer";
 import { minDate } from "@/lib/constants";
@@ -17,7 +17,6 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 export default function Range() {
-  const today = new Date();
   const fromPointer = new Date();
   const [from, setFrom] = useState(fromPointer);
   const [to, setTo] = useState(new Date());
@@ -27,8 +26,9 @@ export default function Range() {
   const [returnId, setReturnId] = useState("");
   const modal = useRef<HTMLDialogElement>(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const [dynamicTo, setDynamicTo] = useState(true);
 
-  fromPointer.setDate(today.getDate() - 14);
+  fromPointer.setDate(new Date().getDate() - 14);
 
   const fetchData = async () => {
     if (inProgress) return;
@@ -78,6 +78,15 @@ export default function Range() {
     modal.current?.addEventListener("close", () => setErrorMessage(""));
   }, [modal]);
 
+  useEffect(() => {
+    if (dynamicTo) {
+      const today = new Date();
+      const temp = new Date(from);
+      temp.setMonth(from.getMonth() + 1);
+      setTo(temp > today ? today : temp);
+    }
+  }, [dynamicTo, from]);
+
   return (
     <>
       <div>
@@ -86,20 +95,20 @@ export default function Range() {
             <Link href="/" className="btn">
               Home
             </Link>
-            <div className="mt-2 flex gap-2 max-w-sm">
+            <div className="mt-2 flex items-center gap-2">
               <span className="label">FROM</span>
               <DatePicker
                 value={from}
                 setValue={setFrom}
                 min={minDate}
-                max={to}
+                max={new Date()}
               ></DatePicker>
               <span className="label">TO</span>
               <DatePicker
                 value={to}
                 setValue={setTo}
-                min={from}
-                max={today}
+                min={minDate}
+                max={new Date()}
               ></DatePicker>
               <button onClick={fetchData} className="btn btn-primary">
                 {inProgress && (
@@ -107,6 +116,11 @@ export default function Range() {
                 )}
                 {!inProgress && <span>Fetch</span>}
               </button>
+              <CheckBox
+                value={dynamicTo}
+                setValue={setDynamicTo}
+                label="Dynamically update range"
+              ></CheckBox>
             </div>
             <span className="italic font-light text-sm">{`Dates must be between ${formatDate(
               minDate
