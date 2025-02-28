@@ -98,7 +98,7 @@ export function Viewer({ apodData, priority, onBack }: Props) {
                   className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl"
                   width={400}
                   height={400}
-                  priority
+                  priority={priority}
                 ></Image>
               )}
             </div>
