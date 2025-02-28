@@ -2,11 +2,12 @@
 
 import { DatePicker } from "@/components/Inputs";
 import { minDate } from "@/lib/constants";
-import { formatDate, formatDateISO } from "@/lib/helpers";
+import { formatDateISO } from "@/lib/helpers";
 import Link from "next/link";
 import { useState } from "react";
 
 const today = new Date();
+today.setMinutes(today.getMinutes() + today.getTimezoneOffset() - 60);
 
 export default function Home() {
   const [date, setDate] = useState<Date>(today);
@@ -37,7 +38,6 @@ export default function Home() {
               min={minDate}
               max={today}
               join
-              label={`Choose any date from ${formatDate(minDate)} to today.`}
             ></DatePicker>
             <Link
               href={{ pathname: "/view", query: { date: formatDateISO(date) } }}

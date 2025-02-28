@@ -20,7 +20,7 @@ export function DatePicker({
   min,
   max,
   join = false,
-  label = "",
+  label,
 }: Props<Date, Date>) {
   const [load, setLoad] = useState(false);
   const [id, setId] = useState("datepicker");
@@ -46,8 +46,10 @@ export function DatePicker({
         style={{ positionAnchor: `--anchor-${id}` } as React.CSSProperties}
       >
         <DayPicker
-          hidden={min ? { before: min, after: max } : []}
-          footer={<span className="px-4">{label}</span>}
+          hidden={min ? { before: min } : []}
+          startMonth={min}
+          endMonth={max}
+          footer={label && <span className="px-4">{label}</span>}
           captionLayout="dropdown"
           className="react-day-picker"
           mode="single"
