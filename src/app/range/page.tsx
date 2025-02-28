@@ -18,6 +18,7 @@ import { useEffect, useRef, useState } from "react";
 
 export default function Range() {
   const fromPointer = new Date();
+  fromPointer.setDate(new Date().getDate() - 14);
   const [from, setFrom] = useState(fromPointer);
   const [to, setTo] = useState(new Date());
   const [apods, setApods] = useState<ApodData[]>([]);
@@ -27,8 +28,6 @@ export default function Range() {
   const modal = useRef<HTMLDialogElement>(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [dynamicTo, setDynamicTo] = useState(true);
-
-  fromPointer.setDate(new Date().getDate() - 14);
 
   const fetchData = async () => {
     if (inProgress) return;
