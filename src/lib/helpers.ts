@@ -36,10 +36,14 @@ export function generateRandomId(): string {
 export function validateDates(from: Date, to: Date): string {
   // Returns an empty string if valid
   const today = new Date();
-  if (from < minDate || to < minDate) return "Start date is too early";
-  if (from > today || to > today) return "Dates cannot be in the future";
+  const sameDate = today.getDate() == to.getDate();
+  if (from < minDate) return "Start date is too early";
+  if (to > today) return "End date cannot be in the future";
   if (from > to) return "Start date cannot be after end date";
   if (to.getFullYear() - from.getFullYear() > 1)
     return "Date range must be less than 2 years";
+  today.setMinutes(today.getMinutes() + today.getTimezoneOffset());
+  if (sameDate && today.getDate() != to.getDate())
+    return "Today's APOD isn't available yet";
   return "";
 }
