@@ -10,7 +10,10 @@ interface Props {
 
 export function ApodCard({ data, onView, id = "apodCard" }: Props) {
   return (
-    <div className="card bg-base-300 w-96 shadow-sm h-full relative" id={id}>
+    <div
+      className="card bg-base-300 w-96 shadow-sm h-full max-h-[80vh] relative"
+      id={id}
+    >
       <figure className="relative aspect-square">
         <Image
           src={data.thumbnail_url ?? data.url ?? "/images/no-image.jpg"}
@@ -23,7 +26,7 @@ export function ApodCard({ data, onView, id = "apodCard" }: Props) {
       <div className="card-body">
         <h2 className="card-title">{data.title}</h2>
         <h3 className="font-medium ">{formatDate(new Date(data.date))}</h3>
-        <p className="line-clamp-12">{data.explanation}</p>
+        <p className="line-clamp-3 sm:line-clamp-12">{data.explanation}</p>
         <div className="card-actions justify-end mt-1">
           <button onClick={onView} className="btn btn-primary">
             View

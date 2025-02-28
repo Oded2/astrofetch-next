@@ -6,15 +6,15 @@ import { CheckBox, DatePicker } from "@/components/Inputs";
 import { Modal } from "@/components/Modal";
 import { Viewer } from "@/components/Viewer";
 import { minDate } from "@/lib/constants";
-import {
-  addParams,
-  formatDate,
-  formatDateISO,
-  validateDates,
-} from "@/lib/helpers";
+import { addParams, formatDateISO, validateDates } from "@/lib/helpers";
 import type { ApodData } from "@/lib/types";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+
+const todaySafe = new Date();
+todaySafe.setMinutes(
+  todaySafe.getMinutes() + todaySafe.getTimezoneOffset() - 60
+);
 
 export default function Range() {
   const fromPointer = new Date();
@@ -93,20 +93,20 @@ export default function Range() {
           <Link href="/" className="btn">
             Home
           </Link>
-          <div className="mt-2 flex items-center gap-2">
+          <div className="mt-2 flex flex-col sm:flex-row items-center gap-2">
             <span className="label">FROM</span>
             <DatePicker
               value={from}
               setValue={setFrom}
               min={minDate}
-              max={new Date()}
+              max={todaySafe}
             ></DatePicker>
             <span className="label">TO</span>
             <DatePicker
               value={to}
               setValue={setTo}
               min={minDate}
-              max={new Date()}
+              max={todaySafe}
             ></DatePicker>
             <button onClick={fetchData} className="btn btn-primary">
               {inProgress && <span className="loading loading-spinner"></span>}
@@ -118,10 +118,7 @@ export default function Range() {
               label="Dynamically update range"
             ></CheckBox>
           </div>
-          <span className="italic font-light text-sm">{`Dates must be between ${formatDate(
-            minDate
-          )} and today`}</span>
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-8 gap-y-8 mt-10">
+          <div className="grid justify-center md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8 mt-10">
             {apods.map((item, index) => {
               return (
                 <ApodCard
