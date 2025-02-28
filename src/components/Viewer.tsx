@@ -4,6 +4,7 @@ import Link from "next/link";
 import { formatDate } from "@/lib/helpers";
 import { Dropdown } from "./Dropdown";
 import { Photo } from "./Photo";
+import Image from "next/image";
 
 interface Props {
   apodData: ApodData | null;
@@ -15,7 +16,7 @@ export function Viewer({ apodData, onBack }: Props) {
   return (
     <main>
       <div className="bg-gray-950 min-h-screen relative">
-        {apodData && (
+        {(apodData?.thumbnail_url || apodData?.url) && (
           <div
             style={{
               backgroundImage: `url(${apodData.thumbnail_url ?? apodData.url})`,
@@ -35,8 +36,7 @@ export function Viewer({ apodData, onBack }: Props) {
                   {apodData?.copyright && (
                     <span>
                       &copy;&nbsp;
-                      {apodData.copyright.replaceAll("\\n", "") ??
-                        loadingMessage}
+                      {apodData.copyright.replaceAll("\\n", "")}
                     </span>
                   )}
                   {apodData && (
@@ -58,34 +58,46 @@ export function Viewer({ apodData, onBack }: Props) {
                     )}
                     {apodData && (
                       <Dropdown label="Options">
-                        <li>
-                          <a
-                            href={apodData.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            Open media
-                          </a>
-                        </li>
+                        {apodData.url && (
+                          <li>
+                            <a
+                              href={apodData.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              Open media
+                            </a>
+                          </li>
+                        )}
                       </Dropdown>
                     )}
                   </div>
                 </div>
               </div>
-              {apodData && apodData.media_type === "image" && (
+              {apodData?.url && apodData.media_type === "image" && (
                 <Photo
                   src={apodData.url}
-                  alt={apodData?.title ?? "Blank"}
+                  alt={apodData.title}
                   className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl shadow"
                 ></Photo>
               )}
-              {apodData && apodData.media_type === "video" && (
+              {apodData?.url && apodData.media_type === "video" && (
                 <iframe
                   src={apodData.url}
-                  title={apodData?.title ?? "Blank"}
+                  title={apodData.title}
                   className="aspect-video h-96 w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl shadow my-auto"
                   allowFullScreen
                 />
+              )}
+              {apodData?.media_type === "other" && (
+                <Image
+                  src="/images/no-image.jpg"
+                  alt="No image"
+                  className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl shadow"
+                  width={400}
+                  height={400}
+                  priority
+                ></Image>
               )}
             </div>
           </Container>

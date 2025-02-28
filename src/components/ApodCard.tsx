@@ -13,7 +13,7 @@ export function ApodCard({ data, onView, id = "apodCard" }: Props) {
     <div className="card bg-base-300 w-96 shadow-sm h-full relative" id={id}>
       <figure className="relative aspect-square">
         <Image
-          src={data.thumbnail_url ?? data.url}
+          src={data.thumbnail_url ?? data.url ?? "/images/no-image.jpg"}
           alt={data.title}
           className="object-cover"
           fill
