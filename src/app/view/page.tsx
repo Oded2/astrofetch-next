@@ -13,9 +13,12 @@ function View() {
 
   useEffect(() => {
     const endpoint = addParams("/api/apod", { start: date, end: date });
-    fetch(endpoint)
-      .then((res) => res.json())
-      .then((json) => setApodData(json));
+    const fetchData = async () => {
+      const response = await fetch(endpoint);
+      const json = await response.json();
+      setApodData(json);
+    };
+    fetchData();
   }, [date]);
 
   return <Viewer apodData={apodData} priority></Viewer>;
