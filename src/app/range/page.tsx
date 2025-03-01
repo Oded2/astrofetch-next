@@ -20,7 +20,11 @@ const createSafeDate = (value?: number | string | Date) => {
 const todaySafe = createSafeDate();
 
 export default function Range() {
-  const [from, setFrom] = useState(createSafeDate());
+  const [from, setFrom] = useState(() => {
+    const initial = createSafeDate();
+    initial.setDate(initial.getDate() - 14);
+    return initial;
+  });
   const [to, setTo] = useState(createSafeDate());
   const [apods, setApods] = useState<ApodData[]>([]);
   const [inProgress, setInProgress] = useState(false);
@@ -29,8 +33,6 @@ export default function Range() {
   const modal = useRef<HTMLDialogElement>(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [dynamicTo, setDynamicTo] = useState(true);
-
-  from.setDate(to.getDate() - 14);
 
   const fetchData = async () => {
     if (inProgress) return;
