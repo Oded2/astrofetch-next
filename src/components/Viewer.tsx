@@ -84,7 +84,7 @@ export function Viewer({ apodData, priority, onBack }: Props) {
                 <Photo
                   src={apodData.url}
                   alt={apodData.title}
-                  className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl"
+                  className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl lg:min-w-xl xl:min-w-3xl"
                   priority={priority}
                 ></Photo>
               )}
