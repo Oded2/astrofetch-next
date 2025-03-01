@@ -4,6 +4,7 @@ import { ApodCard } from "@/components/ApodCard";
 import { Container } from "@/components/Container";
 import { CheckBox, DatePicker } from "@/components/Inputs";
 import { Modal } from "@/components/Modal";
+import { ShareModal } from "@/components/ShareModal";
 import { Viewer } from "@/components/Viewer";
 import { minDate } from "@/lib/constants";
 import { addParams, formatDateISO, validateDates } from "@/lib/helpers";
@@ -29,8 +30,10 @@ export default function Range() {
   const [apods, setApods] = useState<ApodData[]>([]);
   const [inProgress, setInProgress] = useState(false);
   const [current, setCurrent] = useState<ApodData | null>(null);
+  const [shareDate, setShareDate] = useState(createSafeDate());
   const [returnId, setReturnId] = useState("");
   const modal = useRef<HTMLDialogElement>(null);
+  const shareModal = useRef<HTMLDialogElement>(null);
   const [errorMessage, setErrorMessage] = useState("");
   const [dynamicTo, setDynamicTo] = useState(true);
 
@@ -60,6 +63,11 @@ export default function Range() {
   const onView = (index: number) => {
     setCurrent(apods[index]);
     setReturnId(`apod-${index}`);
+  };
+
+  const onShare = (index: number) => {
+    setShareDate(new Date(apods[index].date));
+    shareModal.current?.showModal();
   };
 
   const onBack = () => {
@@ -133,6 +141,7 @@ export default function Range() {
                   key={index}
                   data={item}
                   onView={() => onView(index)}
+                  onShare={() => onShare(index)}
                   id={`apod-${index}`}
                 ></ApodCard>
               );
@@ -145,6 +154,7 @@ export default function Range() {
       <Modal title="Error" ref={modal}>
         <p>{errorMessage}</p>
       </Modal>
+      <ShareModal date={shareDate} ref={shareModal}></ShareModal>
     </>
   );
 }

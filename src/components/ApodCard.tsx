@@ -5,10 +5,11 @@ import Image from "next/image";
 interface Props {
   data: ApodData;
   onView: () => void;
+  onShare: () => void;
   id?: string;
 }
 
-export function ApodCard({ data, onView, id }: Props) {
+export function ApodCard({ data, onShare, onView, id }: Props) {
   return (
     <div className="card bg-base-300 w-96 shadow-sm h-full relative" id={id}>
       <figure className="relative aspect-square">
@@ -27,6 +28,9 @@ export function ApodCard({ data, onView, id }: Props) {
           {data.explanation}
         </p>
         <div className="card-actions justify-end mt-1">
+          <button onClick={onShare} className="btn btn-neutral">
+            Share
+          </button>
           <button onClick={onView} className="btn btn-primary">
             View
           </button>
