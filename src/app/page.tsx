@@ -38,8 +38,8 @@ export default function Home() {
           <div className="divider">OR</div>
           <div className="join">
             <DatePicker
-              value={date}
-              setValue={setDate}
+              date={date}
+              setDate={setDate}
               min={minDate}
               max={today}
               join

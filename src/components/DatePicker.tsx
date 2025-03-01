@@ -6,8 +6,10 @@ import clsx from "clsx";
 import { generateRandomId } from "@/lib/helpers";
 
 interface Props {
-  value: Date;
-  setValue: (newValue: Date) => void;
+  date: Date;
+  setDate: (newDate: Date) => void;
+  month?: Date;
+  setMonth?: (newMonth: Date) => void;
   min: Date;
   max: Date;
   join?: boolean;
@@ -15,8 +17,10 @@ interface Props {
 }
 
 export function DatePicker({
-  value,
-  setValue,
+  date,
+  setDate,
+  month,
+  setMonth,
   min,
   max,
   join = false,
@@ -39,7 +43,7 @@ export function DatePicker({
           )}
           style={{ anchorName: `--anchor-${id}` } as React.CSSProperties}
         >
-          {value ? value.toLocaleDateString() : "Pick a date"}
+          {date ? date.toLocaleDateString() : "Pick a date"}
         </button>
       )}
       <div
@@ -57,8 +61,10 @@ export function DatePicker({
           className="react-day-picker"
           mode="single"
           required
-          selected={value}
-          onSelect={setValue}
+          selected={date}
+          onSelect={setDate}
+          month={month}
+          onMonthChange={setMonth}
         />
       </div>
     </div>
