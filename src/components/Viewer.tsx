@@ -36,6 +36,11 @@ export function Viewer({ apodData, priority, onBack }: Props) {
                 <h1 className="text-3xl font-bold mb-2">
                   {apodData?.title ?? loadingMessage}
                 </h1>
+                {apodData && (
+                  <h4 className="font-medium my-2">
+                    {formatDate(new Date(apodData.date))}
+                  </h4>
+                )}
                 <p>{apodData?.explanation ?? loadingMessage}</p>
                 <div className="mt-2 flex flex-col gap-2">
                   {apodData?.copyright && (
@@ -43,9 +48,6 @@ export function Viewer({ apodData, priority, onBack }: Props) {
                       &copy;&nbsp;
                       {apodData.copyright.replaceAll("\\n", "")}
                     </span>
-                  )}
-                  {apodData && (
-                    <span>{formatDate(new Date(apodData.date))}</span>
                   )}
                   <div className="flex gap-2">
                     {onBack && (
