@@ -7,16 +7,15 @@ import { Modal } from "@/components/Modal";
 import { ShareModal } from "@/components/ShareModal";
 import { Viewer } from "@/components/Viewer";
 import { minDate } from "@/lib/constants";
-import { addParams, formatDateISO, validateDates } from "@/lib/helpers";
+import {
+  addParams,
+  createSafeDate,
+  formatDateISO,
+  validateDates,
+} from "@/lib/helpers";
 import type { ApodData } from "@/lib/types";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-
-const createSafeDate = (value?: number | string | Date) => {
-  const date = value ? new Date(value) : new Date();
-  date.setMinutes(date.getMinutes() + date.getTimezoneOffset() - 60);
-  return date;
-};
 
 const todaySafe = createSafeDate();
 

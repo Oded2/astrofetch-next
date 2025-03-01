@@ -33,6 +33,12 @@ export function generateRandomId(): string {
   return Math.random().toString(36).substring(2, 15);
 }
 
+export function createSafeDate(value?: number | string | Date): Date {
+  const date = value ? new Date(value) : new Date();
+  date.setMinutes(date.getMinutes() + date.getTimezoneOffset() - 60);
+  return date;
+}
+
 export function validateDates(from: Date, to: Date): string {
   // Returns an empty string if valid
   const today = new Date();
@@ -42,8 +48,7 @@ export function validateDates(from: Date, to: Date): string {
   if (from > to) return "Start date cannot be after end date";
   if (to.getFullYear() - from.getFullYear() > 1)
     return "Date range must be less than 2 years";
-  today.setMinutes(today.getMinutes() + today.getTimezoneOffset() - 60);
-  if (sameDate && today.getDate() != to.getDate())
+  if (sameDate && createSafeDate().getDate() != to.getDate())
     return "Today's APOD isn't available yet";
   return "";
 }
