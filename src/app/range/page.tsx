@@ -87,7 +87,10 @@ export default function Range() {
   }, [current, returnId]);
 
   useEffect(() => {
-    modal.current?.addEventListener("close", () => setErrorMessage(""));
+    const current = modal.current;
+    const handleClose = () => setErrorMessage("");
+    current?.addEventListener("close", handleClose);
+    return () => current?.removeEventListener("close", handleClose);
   }, [modal]);
 
   useEffect(() => {
