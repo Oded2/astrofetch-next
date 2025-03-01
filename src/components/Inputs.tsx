@@ -33,7 +33,10 @@ export function DatePicker({
       {load && (
         <button
           popoverTarget={id}
-          className={clsx("input cursor-pointer", join && "join-item")}
+          className={clsx(
+            "input cursor-pointer w-24 justify-center",
+            join && "join-item"
+          )}
           style={{ anchorName: `--anchor-${id}` } as React.CSSProperties}
         >
           {value ? value.toLocaleDateString() : "Pick a date"}
