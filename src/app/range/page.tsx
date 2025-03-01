@@ -34,7 +34,7 @@ export default function Range() {
   const [returnId, setReturnId] = useState("");
   const modal = useRef<HTMLDialogElement>(null);
   const shareModal = useRef<HTMLDialogElement>(null);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [dynamicTo, setDynamicTo] = useState(true);
 
   const fetchData = async () => {
@@ -75,7 +75,7 @@ export default function Range() {
   };
 
   useEffect(() => {
-    if (errorMessage.length > 0) modal.current?.showModal();
+    if (errorMessage) modal.current?.showModal();
   }, [errorMessage]);
 
   useEffect(() => {
