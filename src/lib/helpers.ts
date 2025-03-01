@@ -1,9 +1,5 @@
 import { minDate } from "./constants";
 
-export function getEnv(key: string) {
-  return process.env[key];
-}
-
 export function addParams(
   link: string,
   params: Record<string, string>

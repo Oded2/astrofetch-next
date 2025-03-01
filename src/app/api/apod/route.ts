@@ -1,4 +1,4 @@
-import { addParams, getEnv, validateDates } from "@/lib/helpers";
+import { addParams, validateDates } from "@/lib/helpers";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -6,7 +6,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const start = searchParams.get("start");
   const end = searchParams.get("end");
-  const apiKey = getEnv("API_KEY");
+  const apiKey = process.env.API_KEY;
   if (!apiKey)
     return NextResponse.json({ error: "Missing API Key" }, { status: 500 });
   if (!start || !end)
