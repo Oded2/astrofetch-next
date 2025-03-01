@@ -115,13 +115,13 @@ export function Viewer({ apodData, priority, onBack }: Props) {
                 </div>
               </div>
               {!apodData && (
-                <div className="skeleton h-96 w-full lg:h-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl lg:min-w-xl xl:min-w-3xl my-auto"></div>
+                <div className="skeleton h-96 w-full lg:h-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl lg:min-w-xl xl:min-w-3xl 2xl:min-w-4xl my-auto"></div>
               )}
               {apodData?.url && apodData.media_type === "image" && (
                 <Photo
                   src={apodData.url}
                   alt={apodData.title}
-                  className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl lg:min-w-xl xl:min-w-3xl 2xl:min-w-5xl"
+                  className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl lg:min-w-xl xl:min-w-3xl 2xl:min-w-4xl"
                   priority={priority}
                 ></Photo>
               )}
