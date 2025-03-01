@@ -46,7 +46,10 @@ export function ShareModal({ date, ref }: Props) {
   }, [url]);
 
   return (
-    <Modal title="Share" ref={ref}>
+    <Modal
+      title={`Share - APOD from ${date?.toLocaleDateString() ?? ""}`}
+      ref={ref}
+    >
       <div className="mb-4 w-full flex items-baseline">
         <div className="w-3/4 pe-2">
           <div className="w-full truncate">
