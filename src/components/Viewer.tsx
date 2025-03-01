@@ -13,7 +13,6 @@ interface Props {
 }
 
 export function Viewer({ apodData, priority, onBack }: Props) {
-  const loadingMessage = "Loading...";
   const url = addParams("/api/image", {
     imageUrl: apodData?.url ?? "",
     filename: apodData?.title ?? "Image",
@@ -33,15 +32,23 @@ export function Viewer({ apodData, priority, onBack }: Props) {
           <Container className="h-full">
             <div className="flex flex-col-reverse lg:flex-row overflow-hidden h-full justify-between gap-8 lg:py-10">
               <div className="my-auto">
-                <h1 className="text-3xl font-bold mb-2">
-                  {apodData?.title ?? loadingMessage}
-                </h1>
-                {apodData && (
-                  <h4 className="font-medium my-2">
-                    {formatDate(new Date(apodData.date))}
-                  </h4>
+                {!apodData && (
+                  <h1>
+                    <span className="font-bold">Loading</span>{" "}
+                    <span className="loading loading-dots"></span>
+                  </h1>
                 )}
-                <p>{apodData?.explanation ?? loadingMessage}</p>
+                {apodData && (
+                  <>
+                    <h1 className="text-3xl font-bold mb-2">
+                      {apodData.title}
+                    </h1>
+                    <h4 className="font-medium my-2">
+                      {formatDate(new Date(apodData.date))}
+                    </h4>
+                  </>
+                )}
+                {apodData && <p>{apodData.explanation}</p>}
                 <div className="mt-2 flex flex-col gap-2">
                   {apodData?.copyright && (
                     <span>
@@ -82,6 +89,9 @@ export function Viewer({ apodData, priority, onBack }: Props) {
                   </div>
                 </div>
               </div>
+              {!apodData && (
+                <div className="skeleton h-96 w-full lg:h-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl lg:min-w-xl xl:min-w-3xl my-auto"></div>
+              )}
               {apodData?.url && apodData.media_type === "image" && (
                 <Photo
                   src={apodData.url}
