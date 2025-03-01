@@ -4,6 +4,8 @@
 
 AstroFetch is a Next.js-based web application that allows users to explore NASA's Astronomy Picture of the Day (APOD). With AstroFetch, users can easily access and view images and descriptions from the APOD archive, either by selecting a specific date or by fetching a range of dates. The interface is clean, interactive, and built with modern technologies for an engaging experience.
 
+Visit the website: [astrofetch.netlify.app](https://astrofetch.netlify.app)
+
 ## Features
 
 - **Home Page:** The landing page with two options to start exploring APOD:
