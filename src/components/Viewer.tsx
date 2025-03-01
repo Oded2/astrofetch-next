@@ -5,7 +5,8 @@ import { addParams, formatDate } from "@/lib/helpers";
 import { Dropdown } from "./Dropdown";
 import { Photo } from "./Photo";
 import Image from "next/image";
-
+import { ShareModal } from "./ShareModal";
+import { useEffect, useRef, useState } from "react";
 interface Props {
   apodData: ApodData | null;
   priority?: boolean;
@@ -13,10 +14,22 @@ interface Props {
 }
 
 export function Viewer({ apodData, priority, onBack }: Props) {
+  const shareModal = useRef<HTMLDialogElement>(null);
+  const [apodDate, setApodDate] = useState(new Date());
+
   const url = addParams("/api/image", {
     imageUrl: apodData?.url ?? "",
     filename: apodData?.title ?? "Image",
   });
+
+  const handleShare = () => {
+    shareModal.current?.showModal();
+  };
+
+  useEffect(() => {
+    if (apodData) setApodDate(new Date(apodData.date));
+  }, [apodData]);
+
   return (
     <main>
       <div className="bg-gray-950 min-h-screen relative">
@@ -43,9 +56,7 @@ export function Viewer({ apodData, priority, onBack }: Props) {
                     <h1 className="text-3xl font-bold mb-2">
                       {apodData.title}
                     </h1>
-                    <h4 className="font-medium my-2">
-                      {formatDate(new Date(apodData.date))}
-                    </h4>
+                    <h4 className="font-medium my-2">{formatDate(apodDate)}</h4>
                   </>
                 )}
                 {apodData && <p>{apodData.explanation}</p>}
@@ -80,9 +91,14 @@ export function Viewer({ apodData, priority, onBack }: Props) {
                           >
                             Open Image
                           </a>
+                        </li>
+                        <li>
                           <a href={url} download>
                             Download Image
                           </a>
+                        </li>
+                        <li>
+                          <button onClick={handleShare}>Share</button>
                         </li>
                       </Dropdown>
                     )}
@@ -122,6 +138,7 @@ export function Viewer({ apodData, priority, onBack }: Props) {
           </Container>
         </div>
       </div>
+      <ShareModal ref={shareModal} date={apodDate}></ShareModal>
     </main>
   );
 }
