@@ -49,7 +49,7 @@ export function DatePicker({
         style={{ positionAnchor: `--anchor-${id}` } as React.CSSProperties}
       >
         <DayPicker
-          hidden={min ? { before: min } : []}
+          hidden={min ? { before: min, after: max } : []}
           startMonth={min}
           endMonth={max}
           footer={label && <span className="px-4">{label}</span>}
