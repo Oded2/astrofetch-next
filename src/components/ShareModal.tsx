@@ -58,11 +58,13 @@ export function ShareModal({ date, ref }: Props) {
         </button>
       </div>
       <div className="divider">OR</div>
-      <div className=" text-center">
-        <h4 className="font-semibold">Scan QR Code</h4>
-        <div
-          className={clsx("mt-4 relative w-64 h-64 mx-auto", !qr && "skeleton")}
-        >
+      <div className="flex flex-col items-center gap-4 w-full">
+        {qr && (
+          <a href={qr} download="QR-code.png" className="btn btn-neutral mt-2">
+            Download QR Code
+          </a>
+        )}
+        <div className={clsx("relative w-64 h-64", !qr && "skeleton")}>
           {qr && (
             <Image
               src={qr}
