@@ -28,7 +28,7 @@ export default function Range() {
   });
   const [to, setTo] = useState(createSafeDate());
   const [fromMonth, setFromMonth] = useState(createSafeDate(from));
-  const [toMonth, setToMonth] = useState(createSafeDate(to));
+  const [toMonth, setToMonth] = useState(createSafeDate());
   const [apods, setApods] = useState<ApodData[]>([]);
   const [inProgress, setInProgress] = useState(false);
   const [current, setCurrent] = useState<ApodData | null>(null);
