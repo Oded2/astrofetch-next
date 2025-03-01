@@ -27,7 +27,8 @@ export default function Range() {
     return initial;
   });
   const [to, setTo] = useState(createSafeDate());
-  const [toMonth, setToMonth] = useState(createSafeDate());
+  const [fromMonth, setFromMonth] = useState(createSafeDate(from));
+  const [toMonth, setToMonth] = useState(createSafeDate(to));
   const [apods, setApods] = useState<ApodData[]>([]);
   const [inProgress, setInProgress] = useState(false);
   const [current, setCurrent] = useState<ApodData | null>(null);
@@ -120,6 +121,8 @@ export default function Range() {
             <DatePicker
               date={from}
               setDate={setFrom}
+              month={fromMonth}
+              setMonth={setFromMonth}
               min={minDate}
               max={todaySafe}
             ></DatePicker>
