@@ -1,6 +1,6 @@
 "use client";
 
-import { DatePicker } from "@/components/Inputs";
+import { DatePicker } from "@/components/DatePicker";
 import { minDate } from "@/lib/constants";
 import { createSafeDate, formatDateISO } from "@/lib/helpers";
 import Link from "next/link";

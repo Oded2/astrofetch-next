@@ -1,8 +1,9 @@
 "use client";
 
 import { ApodCard } from "@/components/ApodCard";
+import { CheckBox } from "@/components/Checkbox";
 import { Container } from "@/components/Container";
-import { CheckBox, DatePicker } from "@/components/Inputs";
+import { DatePicker } from "@/components/DatePicker";
 import { Modal } from "@/components/Modal";
 import { ShareModal } from "@/components/ShareModal";
 import { Viewer } from "@/components/Viewer";
