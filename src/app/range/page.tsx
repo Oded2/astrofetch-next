@@ -145,7 +145,7 @@ export default function Range() {
               label="Dynamically update range"
             ></CheckBox>
           </div>
-          <div className="grid justify-center md:grid-cols-2 xl:grid-cols-3 gap-8 mt-10">
+          <div className="grid justify-center md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 mt-10">
             {apods.map((item, index) => {
               return (
                 <ApodCard

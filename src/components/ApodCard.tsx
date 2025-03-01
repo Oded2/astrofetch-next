@@ -11,7 +11,7 @@ interface Props {
 
 export function ApodCard({ data, onShare, onView, id }: Props) {
   return (
-    <div className="card bg-base-300 w-96 shadow-sm h-full relative" id={id}>
+    <div className="card bg-base-300 shadow-sm h-full relative" id={id}>
       <figure className="relative aspect-square">
         <Image
           src={data.thumbnail_url ?? data.url ?? "/images/no-image.jpg"}
