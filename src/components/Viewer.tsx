@@ -15,7 +15,7 @@ interface Props {
 
 export function Viewer({ apodData, priority, onBack }: Props) {
   const shareModal = useRef<HTMLDialogElement>(null);
-  const [apodDate, setApodDate] = useState(new Date());
+  const [apodDate, setApodDate] = useState<Date | null>(null);
 
   const url = addParams("/api/image", {
     imageUrl: apodData?.url ?? "",
@@ -56,7 +56,11 @@ export function Viewer({ apodData, priority, onBack }: Props) {
                     <h1 className="text-3xl font-bold mb-2">
                       {apodData.title}
                     </h1>
-                    <h4 className="font-medium my-2">{formatDate(apodDate)}</h4>
+                    {apodDate && (
+                      <h4 className="font-medium my-2">
+                        {formatDate(apodDate)}
+                      </h4>
+                    )}
                   </>
                 )}
                 {apodData && <p>{apodData.explanation}</p>}
@@ -101,6 +105,11 @@ export function Viewer({ apodData, priority, onBack }: Props) {
                           <button onClick={handleShare}>Share</button>
                         </li>
                       </Dropdown>
+                    )}
+                    {apodData?.media_type !== "image" && (
+                      <button onClick={handleShare} className="btn btn-neutral">
+                        Share
+                      </button>
                     )}
                   </div>
                 </div>

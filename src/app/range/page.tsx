@@ -30,7 +30,7 @@ export default function Range() {
   const [apods, setApods] = useState<ApodData[]>([]);
   const [inProgress, setInProgress] = useState(false);
   const [current, setCurrent] = useState<ApodData | null>(null);
-  const [shareDate, setShareDate] = useState(createSafeDate());
+  const [shareDate, setShareDate] = useState<Date | null>(null);
   const [returnId, setReturnId] = useState("");
   const modal = useRef<HTMLDialogElement>(null);
   const shareModal = useRef<HTMLDialogElement>(null);
