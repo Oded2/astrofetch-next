@@ -1,3 +1,5 @@
+"use client";
+
 import { RefObject, useEffect, useRef, useState } from "react";
 import { Modal } from "./Modal";
 import { addParams, formatDateISO } from "@/lib/helpers";
