@@ -7,6 +7,7 @@ import { Photo } from "./Photo";
 import Image from "next/image";
 import { ShareModal } from "./ShareModal";
 import { useEffect, useRef, useState } from "react";
+
 interface Props {
   apodData: ApodData | null;
   priority?: boolean;
@@ -17,7 +18,7 @@ export function Viewer({ apodData, priority, onBack }: Props) {
   const shareModal = useRef<HTMLDialogElement>(null);
   const [apodDate, setApodDate] = useState<Date | null>(null);
 
-  const url = addParams("/api/image", {
+  const imageDownloadUrl = addParams("/api/image", {
     imageUrl: apodData?.url ?? "",
     filename: apodData?.title ?? "Image",
   });
@@ -27,8 +28,51 @@ export function Viewer({ apodData, priority, onBack }: Props) {
   };
 
   useEffect(() => {
-    if (apodData) setApodDate(new Date(apodData.date));
+    if (apodData) {
+      setApodDate(new Date(apodData.date));
+    }
   }, [apodData]);
+
+  const renderMedia = () => {
+    if (!apodData) {
+      return (
+        <div className="skeleton h-96 w-full lg:h-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl lg:min-w-xl xl:min-w-3xl 2xl:min-w-4xl my-auto"></div>
+      );
+    }
+    if (apodData.media_type === "image" && apodData.url) {
+      return (
+        <Photo
+          src={apodData.url}
+          alt={apodData.title}
+          className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl lg:min-w-xl xl:min-w-3xl 2xl:min-w-4xl"
+          priority={priority}
+        />
+      );
+    }
+    if (
+      (apodData.media_type === "video" || apodData.media_type === "other") &&
+      apodData.thumbnail_url
+    ) {
+      return (
+        <iframe
+          src={apodData.url}
+          title={apodData.title}
+          className="aspect-video h-96 w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl my-auto"
+          allowFullScreen
+        />
+      );
+    }
+    return (
+      <Image
+        src="/images/no-image.jpg"
+        alt="No image"
+        className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl"
+        width={400}
+        height={400}
+        priority={priority}
+      />
+    );
+  };
 
   return (
     <main>
@@ -61,93 +105,64 @@ export function Viewer({ apodData, priority, onBack }: Props) {
                         {formatDate(apodDate)}
                       </h4>
                     )}
+                    <p>{apodData.explanation}</p>
+                    <div className="mt-2 flex flex-col gap-2">
+                      {apodData.copyright && (
+                        <span>
+                          &copy;&nbsp;
+                          {apodData.copyright.replaceAll("\\n", "")}
+                        </span>
+                      )}
+                      <div className="flex gap-2">
+                        {onBack ? (
+                          <button
+                            onClick={onBack}
+                            className="btn btn-neutral join-item"
+                          >
+                            Back
+                          </button>
+                        ) : (
+                          <Link href="/" className="btn btn-neutral join-item">
+                            Home
+                          </Link>
+                        )}
+                        <Dropdown label="Options">
+                          <li>
+                            <a
+                              href={apodData.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {`Open ${
+                                apodData.media_type === "image"
+                                  ? "Image"
+                                  : "Media"
+                              }`}
+                            </a>
+                          </li>
+                          {apodData.media_type === "image" && (
+                            <li>
+                              <a href={imageDownloadUrl} download>
+                                Download Image
+                              </a>
+                            </li>
+                          )}
+                          <li>
+                            <button onClick={handleShare}>Share</button>
+                          </li>
+                        </Dropdown>
+                      </div>
+                    </div>
                   </>
                 )}
-                {apodData && <p>{apodData.explanation}</p>}
-                <div className="mt-2 flex flex-col gap-2">
-                  {apodData?.copyright && (
-                    <span>
-                      &copy;&nbsp;
-                      {apodData.copyright.replaceAll("\\n", "")}
-                    </span>
-                  )}
-                  <div className="flex gap-2">
-                    {onBack && (
-                      <button
-                        onClick={onBack}
-                        className="btn btn-neutral join-item"
-                      >
-                        Back
-                      </button>
-                    )}
-                    {!onBack && (
-                      <Link href="/" className="btn btn-neutral join-item">
-                        Home
-                      </Link>
-                    )}
-                    {apodData?.media_type === "image" && (
-                      <Dropdown label="Options">
-                        <li>
-                          <a
-                            href={apodData.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            Open Image
-                          </a>
-                        </li>
-                        <li>
-                          <a href={url} download>
-                            Download Image
-                          </a>
-                        </li>
-                        <li>
-                          <button onClick={handleShare}>Share</button>
-                        </li>
-                      </Dropdown>
-                    )}
-                    {apodData?.media_type !== "image" && (
-                      <button onClick={handleShare} className="btn btn-neutral">
-                        Share
-                      </button>
-                    )}
-                  </div>
-                </div>
               </div>
-              {!apodData && (
-                <div className="skeleton h-96 w-full lg:h-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl lg:min-w-xl xl:min-w-3xl 2xl:min-w-4xl my-auto"></div>
-              )}
-              {apodData?.url && apodData.media_type === "image" && (
-                <Photo
-                  src={apodData.url}
-                  alt={apodData.title}
-                  className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl lg:min-w-xl xl:min-w-3xl 2xl:min-w-4xl"
-                  priority={priority}
-                ></Photo>
-              )}
-              {apodData?.url && apodData.media_type === "video" && (
-                <iframe
-                  src={apodData.url}
-                  title={apodData.title}
-                  className="aspect-video h-96 w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl my-auto"
-                  allowFullScreen
-                />
-              )}
-              {apodData?.media_type === "other" && (
-                <Image
-                  src="/images/no-image.jpg"
-                  alt="No image"
-                  className="max-h-full object-contain w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl"
-                  width={400}
-                  height={400}
-                  priority={priority}
-                ></Image>
-              )}
+              {/* Render the media content based on apodData */}
+              {renderMedia()}
             </div>
           </Container>
         </div>
       </div>
-      <ShareModal ref={shareModal} date={apodDate}></ShareModal>
+      <ShareModal ref={shareModal} date={apodDate} />
     </main>
   );
 }

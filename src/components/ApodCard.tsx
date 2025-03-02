@@ -1,3 +1,4 @@
+import { allowedExtensions } from "@/lib/constants";
 import { formatDate } from "@/lib/helpers";
 import type { ApodData } from "@/lib/types";
 import Image from "next/image";
@@ -10,11 +11,14 @@ interface Props {
 }
 
 export function ApodCard({ data, onShare, onView, id }: Props) {
+  let imgSrc = data.thumbnail_url ?? data.url ?? "/images/no-image.jpg";
+  if (!allowedExtensions.some((val) => imgSrc.endsWith(val)))
+    imgSrc = "/images/no-image.jpg";
   return (
     <div className="card bg-base-300 shadow-sm h-full relative" id={id}>
       <figure className="relative aspect-square">
         <Image
-          src={data.thumbnail_url ?? data.url ?? "/images/no-image.jpg"}
+          src={imgSrc}
           alt={data.title}
           className="object-cover"
           fill
