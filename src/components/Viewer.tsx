@@ -57,7 +57,7 @@ export function Viewer({ apodData, priority, onBack }: Props) {
         <iframe
           src={apodData.url}
           title={apodData.title}
-          className="aspect-video h-96 w-full lg:w-auto xl:max-w-4xl 2xl:max-w-5xl my-auto"
+          className="max-h-full w-full aspect-video lg:max-h-96 lg:my-auto xl:max-w-4xl 2xl:max-w-5xl lg:min-w-xl xl:min-w-3xl 2xl:min-w-4xl"
           allowFullScreen
         />
       );
