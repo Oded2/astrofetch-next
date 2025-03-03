@@ -23,46 +23,46 @@ export function DatePicker({
   setMonth,
   join = false,
 }: Props) {
-  const [load, setLoad] = useState(false);
-  const [id, setId] = useState("datepicker");
+  const [id, setId] = useState<string | null>(null);
   useEffect(() => {
-    setId(`datepicker-${generateRandomId()}`);
-    setLoad(true);
+    setId(generateRandomId());
   }, []);
   return (
     <div className="flex">
-      {load && (
-        <button
-          popoverTarget={id}
-          className={clsx(
-            "input cursor-pointer w-24 justify-center",
-            join && "join-item"
-          )}
-          style={{ anchorName: `--anchor-${id}` } as React.CSSProperties}
-        >
-          {date ? date.toLocaleDateString() : "Pick a date"}
-        </button>
+      {id && (
+        <>
+          <button
+            popoverTarget={`datepicker-${id}`}
+            className={clsx(
+              "input cursor-pointer w-24 justify-center",
+              join && "join-item"
+            )}
+            style={{ anchorName: `--anchor-${id}` } as React.CSSProperties}
+          >
+            {date ? date.toLocaleDateString() : "Pick a date"}
+          </button>
+          <div
+            popover="auto"
+            id={`datepicker-${id}`}
+            className="dropdown"
+            style={{ positionAnchor: `--anchor-${id}` } as React.CSSProperties}
+          >
+            <DayPicker
+              hidden={[{ before: minDate, after: max }, ...hiddenDays]}
+              startMonth={minDate}
+              endMonth={max}
+              captionLayout="dropdown"
+              className="react-day-picker"
+              mode="single"
+              required
+              selected={date}
+              onSelect={setDate}
+              month={month}
+              onMonthChange={setMonth}
+            />
+          </div>
+        </>
       )}
-      <div
-        popover="auto"
-        id={id}
-        className="dropdown"
-        style={{ positionAnchor: `--anchor-${id}` } as React.CSSProperties}
-      >
-        <DayPicker
-          hidden={[{ before: minDate, after: max }, ...hiddenDays]}
-          startMonth={minDate}
-          endMonth={max}
-          captionLayout="dropdown"
-          className="react-day-picker"
-          mode="single"
-          required
-          selected={date}
-          onSelect={setDate}
-          month={month}
-          onMonthChange={setMonth}
-        />
-      </div>
     </div>
   );
 }
