@@ -52,8 +52,6 @@ export function validateDates(from: Date, to: Date): string {
     return "Start date is invalid";
   if (!isSameDay(from, to) && invalidDates.some((date) => isSameDay(to, date)))
     return "End date is invalid";
-  if (to.getFullYear() - from.getFullYear() > 1)
-    return "Date range must be less than 2 years";
   if (to > createSafeDate()) return "Today's APOD isn't available yet";
   return "";
 }

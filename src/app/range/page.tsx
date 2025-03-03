@@ -35,6 +35,7 @@ export default function Range() {
   const shareModal = useRef<HTMLDialogElement>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [dynamicTo, setDynamicTo] = useState(true);
+  const [showWarning, setShowWarning] = useState(false);
 
   const fetchData = async () => {
     if (inProgress) return;
@@ -103,6 +104,11 @@ export default function Range() {
     }
   }, [dynamicTo, from]);
 
+  useEffect(() => {
+    // Check to see if the range is greater than 2 years in miliseconds
+    setShowWarning(to.getTime() - from.getTime() > 63113904000);
+  }, [to, from]);
+
   return (
     <>
       {!current && (
@@ -128,7 +134,7 @@ export default function Range() {
               month={toMonth}
               setMonth={setToMonth}
             ></DatePicker>
-            <button onClick={fetchData} className="btn btn-primary">
+            <button onClick={fetchData} className="btn btn-primary w-20">
               {inProgress && <span className="loading loading-spinner"></span>}
               {!inProgress && <span>Fetch</span>}
             </button>
@@ -138,6 +144,11 @@ export default function Range() {
               label="Dynamically update range"
             ></CheckBox>
           </div>
+          {showWarning && (
+            <span className="font-light text-sm italic">
+              A large date range may result in longer load times.
+            </span>
+          )}
           <div className="grid justify-center md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 mt-10">
             {apods.map((item, index) => {
               return (
