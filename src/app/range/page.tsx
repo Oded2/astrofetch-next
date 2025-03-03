@@ -7,25 +7,20 @@ import { DatePicker } from "@/components/DatePicker";
 import { Modal } from "@/components/Modal";
 import { ShareModal } from "@/components/ShareModal";
 import { Viewer } from "@/components/Viewer";
-import {
-  addParams,
-  createSafeDate,
-  formatDateISO,
-  validateDates,
-} from "@/lib/helpers";
+import { addParams, formatDateISO, validateDates } from "@/lib/helpers";
 import type { ApodData } from "@/lib/types";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 export default function Range() {
   const [from, setFrom] = useState(() => {
-    const initial = createSafeDate();
+    const initial = new Date();
     initial.setDate(initial.getDate() - 14);
     return initial;
   });
-  const [to, setTo] = useState(createSafeDate());
-  const [fromMonth, setFromMonth] = useState(createSafeDate(from));
-  const [toMonth, setToMonth] = useState(createSafeDate());
+  const [to, setTo] = useState(new Date());
+  const [fromMonth, setFromMonth] = useState(new Date(from));
+  const [toMonth, setToMonth] = useState(new Date());
   const [apods, setApods] = useState<ApodData[]>([]);
   const [inProgress, setInProgress] = useState(false);
   const [current, setCurrent] = useState<ApodData | null>(null);
@@ -95,8 +90,8 @@ export default function Range() {
 
   useEffect(() => {
     if (dynamicTo) {
-      const today = createSafeDate();
-      const temp = createSafeDate(from);
+      const today = new Date();
+      const temp = new Date(from);
       temp.setMonth(from.getMonth() + 1);
       const final = temp > today ? today : temp;
       setTo(final);

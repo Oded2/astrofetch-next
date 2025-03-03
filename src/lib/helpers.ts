@@ -1,5 +1,8 @@
 import { invalidDates, minDate } from "./constants";
 
+const safeDate = new Date();
+safeDate.setMinutes(safeDate.getMinutes() + safeDate.getTimezoneOffset() - 60);
+
 export function addParams(
   link: string,
   params: Record<string, string>
@@ -29,12 +32,6 @@ export function generateRandomId(): string {
   return Math.random().toString(36).substring(2, 15);
 }
 
-export function createSafeDate(value?: number | string | Date): Date {
-  const date = value ? new Date(value) : new Date();
-  date.setMinutes(date.getMinutes() + date.getTimezoneOffset() - 60);
-  return date;
-}
-
 function isSameDay(date1: Date, date2: Date) {
   return (
     date1.getFullYear() === date2.getFullYear() &&
@@ -52,6 +49,6 @@ export function validateDates(from: Date, to: Date): [number, string] {
     return [422, "Start date is invalid"]; // Unprocessable Entity
   if (!isSameDay(from, to) && invalidDates.some((date) => isSameDay(to, date)))
     return [422, "End date is invalid"];
-  if (to > createSafeDate()) return [404, "Today's APOD isn't available yet"]; // Not Found
+  if (to > safeDate) return [404, "Today's APOD isn't available yet"]; // Not Found
   return [200, ""]; // OK
 }
