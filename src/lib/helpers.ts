@@ -1,4 +1,4 @@
-import { minDate } from "./constants";
+import { invalidDates, minDate } from "./constants";
 
 export function addParams(
   link: string,
@@ -35,16 +35,25 @@ export function createSafeDate(value?: number | string | Date): Date {
   return date;
 }
 
+function isSameDay(date1: Date, date2: Date) {
+  return (
+    date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate()
+  );
+}
+
 export function validateDates(from: Date, to: Date): string {
   // Returns an empty string if valid
-  const today = new Date();
-  const sameDate = today.getDate() == to.getDate();
   if (from < minDate) return "Start date is too early";
-  if (to > today) return "End date cannot be in the future";
+  if (to > new Date()) return "End date cannot be in the future";
   if (from > to) return "Start date cannot be after end date";
+  if (invalidDates.some((date) => isSameDay(from, date)))
+    return "Start date is invalid";
+  if (!isSameDay(from, to) && invalidDates.some((date) => isSameDay(to, date)))
+    return "End date is invalid";
   if (to.getFullYear() - from.getFullYear() > 1)
     return "Date range must be less than 2 years";
-  if (sameDate && createSafeDate().getDate() != to.getDate())
-    return "Today's APOD isn't available yet";
+  if (to > createSafeDate()) return "Today's APOD isn't available yet";
   return "";
 }

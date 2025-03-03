@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { DayPicker, Matcher } from "react-day-picker";
 import clsx from "clsx";
 import { generateRandomId } from "@/lib/helpers";
-import { minDate } from "@/lib/constants";
+import { invalidDates, minDate } from "@/lib/constants";
 
 interface Props {
   date: Date;
@@ -19,7 +19,7 @@ const max = new Date();
 // APOD doesn't exist on these days
 const hiddenDays: Matcher[] = [
   { before: minDate, after: max },
-  { after: minDate, before: new Date(1995, 5, 20, 0, 0, 0) },
+  ...invalidDates,
 ];
 
 export function DatePicker({
