@@ -33,42 +33,47 @@ export function DatePicker({
   useEffect(() => {
     setId(generateRandomId());
   }, []);
+  if (id)
+    return (
+      <div className="flex">
+        <button
+          popoverTarget={`datepicker-${id}`}
+          className={clsx(
+            "input cursor-pointer w-24 justify-center",
+            join && "join-item"
+          )}
+          style={{ anchorName: `--anchor-${id}` } as React.CSSProperties}
+        >
+          {date ? date.toLocaleDateString() : "Pick a date"}
+        </button>
+        <div
+          popover="auto"
+          id={`datepicker-${id}`}
+          className="dropdown"
+          style={{ positionAnchor: `--anchor-${id}` } as React.CSSProperties}
+        >
+          <DayPicker
+            hidden={hiddenDays}
+            startMonth={minDate}
+            endMonth={max}
+            captionLayout="dropdown"
+            className="react-day-picker"
+            mode="single"
+            required
+            selected={date}
+            onSelect={setDate}
+            month={month}
+            onMonthChange={setMonth}
+          />
+        </div>
+      </div>
+    );
   return (
-    <div className="flex">
-      {id && (
-        <>
-          <button
-            popoverTarget={`datepicker-${id}`}
-            className={clsx(
-              "input cursor-pointer w-24 justify-center",
-              join && "join-item"
-            )}
-            style={{ anchorName: `--anchor-${id}` } as React.CSSProperties}
-          >
-            {date ? date.toLocaleDateString() : "Pick a date"}
-          </button>
-          <div
-            popover="auto"
-            id={`datepicker-${id}`}
-            className="dropdown"
-            style={{ positionAnchor: `--anchor-${id}` } as React.CSSProperties}
-          >
-            <DayPicker
-              hidden={hiddenDays}
-              startMonth={minDate}
-              endMonth={max}
-              captionLayout="dropdown"
-              className="react-day-picker"
-              mode="single"
-              required
-              selected={date}
-              onSelect={setDate}
-              month={month}
-              onMonthChange={setMonth}
-            />
-          </div>
-        </>
+    <button
+      className={clsx(
+        "input cursor-pointer w-24 justify-center skeleton",
+        join && "join-item rounded-none"
       )}
-    </div>
+    ></button>
   );
 }
