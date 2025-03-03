@@ -105,8 +105,8 @@ export default function Range() {
   }, [dynamicTo, from]);
 
   useEffect(() => {
-    // Check to see if the range is greater than 2 years in miliseconds
-    setShowWarning(to.getTime() - from.getTime() > 63113904000);
+    // Check to see if the range is greater than a year in miliseconds
+    setShowWarning(to.getTime() - from.getTime() > 31556952000);
   }, [to, from]);
 
   return (
