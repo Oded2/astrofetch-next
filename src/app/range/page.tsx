@@ -39,9 +39,9 @@ export default function Range() {
 
   const fetchData = async () => {
     if (inProgress) return;
-    const valid = validateDates(from, to);
-    if (valid.length > 0) {
-      setErrorMessage(valid);
+    const [status, message] = validateDates(from, to);
+    if (status != 200) {
+      setErrorMessage(message);
       return;
     }
     setInProgress(true);

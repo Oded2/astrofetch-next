@@ -1,11 +1,11 @@
 "use client";
 
 import { DatePicker } from "@/components/DatePicker";
-import { createSafeDate, formatDateISO } from "@/lib/helpers";
+import { formatDateISO } from "@/lib/helpers";
 import Link from "next/link";
 import { useState } from "react";
 
-const today = createSafeDate();
+const today = new Date();
 
 export default function Home() {
   const [date, setDate] = useState<Date>(today);

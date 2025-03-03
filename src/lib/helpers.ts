@@ -43,15 +43,15 @@ function isSameDay(date1: Date, date2: Date) {
   );
 }
 
-export function validateDates(from: Date, to: Date): string {
-  // Returns an empty string if valid
-  if (from < minDate) return "Start date is too early";
-  if (to > new Date()) return "End date cannot be in the future";
-  if (from > to) return "Start date cannot be after end date";
+export function validateDates(from: Date, to: Date): [number, string] {
+  // Returns 200 and an empty string if valid
+  if (from < minDate) return [400, "Start date is too early"]; // Bad Request
+  if (to > new Date()) return [400, "End date cannot be in the future"];
+  if (from > to) return [400, "Start date cannot be after end date"];
   if (invalidDates.some((date) => isSameDay(from, date)))
-    return "Start date is invalid";
+    return [422, "Start date is invalid"]; // Unprocessable Entity
   if (!isSameDay(from, to) && invalidDates.some((date) => isSameDay(to, date)))
-    return "End date is invalid";
-  if (to > createSafeDate()) return "Today's APOD isn't available yet";
-  return "";
+    return [422, "End date is invalid"];
+  if (to > createSafeDate()) return [404, "Today's APOD isn't available yet"]; // Not Found
+  return [200, ""]; // OK
 }

@@ -18,9 +18,12 @@ export async function GET(request: Request) {
     thumbs: "true",
     ...params,
   });
-  const valid = validateDates(new Date(start), new Date(end));
-  if (valid.length > 0)
-    return NextResponse.json({ error: valid }, { status: 422 });
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  [startDate, endDate].forEach((date) => date.setHours(0, 0, 0, 0));
+  const [status, message] = validateDates(startDate, endDate);
+  if (status != 200)
+    return NextResponse.json({ error: message }, { status: status });
   console.log("Fetching external API");
   const response = await fetch(url);
   if (!response.ok)

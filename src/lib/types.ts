@@ -8,3 +8,9 @@ export type ApodData = {
   title: string;
   url?: string;
 };
+
+export type ServerError = {
+  message: string;
+  status: number;
+  statusText: string;
+};
