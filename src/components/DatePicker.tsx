@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { DayPicker } from "react-day-picker";
 import clsx from "clsx";
-import { createSafeDate, generateRandomId } from "@/lib/helpers";
+import { generateRandomId } from "@/lib/helpers";
 import { hiddenDays, minDate } from "@/lib/constants";
 
 interface Props {
@@ -15,7 +15,7 @@ interface Props {
   label?: string;
 }
 
-const max = createSafeDate();
+const max = new Date();
 
 export function DatePicker({
   date,
