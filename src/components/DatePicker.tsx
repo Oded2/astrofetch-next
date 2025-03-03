@@ -12,7 +12,6 @@ interface Props {
   month?: Date;
   setMonth?: (newMonth: Date) => void;
   join?: boolean;
-  label?: string;
 }
 
 const max = new Date();
@@ -23,7 +22,6 @@ export function DatePicker({
   month,
   setMonth,
   join = false,
-  label,
 }: Props) {
   const [load, setLoad] = useState(false);
   const [id, setId] = useState("datepicker");
@@ -55,7 +53,6 @@ export function DatePicker({
           hidden={[{ before: minDate, after: max }, ...hiddenDays]}
           startMonth={minDate}
           endMonth={max}
-          footer={label && <span className="px-4">{label}</span>}
           captionLayout="dropdown"
           className="react-day-picker"
           mode="single"
