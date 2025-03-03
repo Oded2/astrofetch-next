@@ -1,7 +1,6 @@
 "use client";
 
 import { DatePicker } from "@/components/DatePicker";
-import { minDate } from "@/lib/constants";
 import { createSafeDate, formatDateISO } from "@/lib/helpers";
 import Link from "next/link";
 import { useState } from "react";
@@ -37,13 +36,7 @@ export default function Home() {
           </Link>
           <div className="divider">OR</div>
           <div className="join">
-            <DatePicker
-              date={date}
-              setDate={setDate}
-              min={minDate}
-              max={today}
-              join
-            ></DatePicker>
+            <DatePicker date={date} setDate={setDate} join></DatePicker>
             <Link
               href={{ pathname: "/view", query: { date: formatDateISO(date) } }}
               className="btn btn-primary join-item"

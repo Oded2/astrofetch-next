@@ -7,7 +7,6 @@ import { DatePicker } from "@/components/DatePicker";
 import { Modal } from "@/components/Modal";
 import { ShareModal } from "@/components/ShareModal";
 import { Viewer } from "@/components/Viewer";
-import { minDate } from "@/lib/constants";
 import {
   addParams,
   createSafeDate,
@@ -17,8 +16,6 @@ import {
 import type { ApodData } from "@/lib/types";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-
-const todaySafe = createSafeDate();
 
 export default function Range() {
   const [from, setFrom] = useState(() => {
@@ -123,8 +120,6 @@ export default function Range() {
               setDate={setFrom}
               month={fromMonth}
               setMonth={setFromMonth}
-              min={minDate}
-              max={todaySafe}
             ></DatePicker>
             <span className="label">TO</span>
             <DatePicker
@@ -132,8 +127,6 @@ export default function Range() {
               setDate={setTo}
               month={toMonth}
               setMonth={setToMonth}
-              min={minDate}
-              max={todaySafe}
             ></DatePicker>
             <button onClick={fetchData} className="btn btn-primary">
               {inProgress && <span className="loading loading-spinner"></span>}
