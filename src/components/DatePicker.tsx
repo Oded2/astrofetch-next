@@ -59,6 +59,7 @@ export function DatePicker({
             captionLayout="dropdown"
             className="react-day-picker"
             mode="single"
+            fixedWeeks
             required
             selected={date}
             onSelect={setDate}
