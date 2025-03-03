@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DayPicker } from "react-day-picker";
+import { DayPicker, Matcher } from "react-day-picker";
 import clsx from "clsx";
 import { generateRandomId } from "@/lib/helpers";
-import { hiddenDays, minDate } from "@/lib/constants";
+import { minDate } from "@/lib/constants";
 
 interface Props {
   date: Date;
@@ -15,6 +15,12 @@ interface Props {
 }
 
 const max = new Date();
+
+// APOD doesn't exist on these days
+const hiddenDays: Matcher[] = [
+  { before: minDate, after: max },
+  { after: minDate, before: new Date(1995, 5, 20, 0, 0, 0) },
+];
 
 export function DatePicker({
   date,
@@ -48,7 +54,7 @@ export function DatePicker({
             style={{ positionAnchor: `--anchor-${id}` } as React.CSSProperties}
           >
             <DayPicker
-              hidden={[{ before: minDate, after: max }, ...hiddenDays]}
+              hidden={hiddenDays}
               startMonth={minDate}
               endMonth={max}
               captionLayout="dropdown"
