@@ -30,10 +30,6 @@ function View() {
     fetchData();
   }, [date]);
 
-  useEffect(() => {
-    console.log(error);
-  }, [error]);
-
   if (error) return <ErrorPage error={error}></ErrorPage>;
   return <Viewer apodData={apodData} priority></Viewer>;
 }
