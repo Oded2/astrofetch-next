@@ -33,9 +33,10 @@ export async function GET(request: Request) {
     );
   const remaining = response.headers.get("x-ratelimit-remaining");
   console.log(
-    `NASA API: ${
-      remaining ? parseInt(remaining).toLocaleString() : "NaN"
+    `NASA API: ${remaining ? parseInt(remaining).toLocaleString() : "NaN"
     } remaining requests.`
   );
-  return NextResponse.json(await response.json());
+  return NextResponse.json(await response.json(), {
+    headers: { 'Cache-Control': 'no-store' }
+  });
 }
