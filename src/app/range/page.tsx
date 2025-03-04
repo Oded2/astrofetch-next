@@ -7,7 +7,8 @@ import { DatePicker } from "@/components/DatePicker";
 import { Modal } from "@/components/Modal";
 import { ShareModal } from "@/components/ShareModal";
 import { Viewer } from "@/components/Viewer";
-import { addParams, formatDateISO, validateDates } from "@/lib/helpers";
+import { postParams } from "@/lib/constants";
+import { formatDateISO, validateDates } from "@/lib/helpers";
 import type { ApodData } from "@/lib/types";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -40,11 +41,13 @@ export default function Range() {
       return;
     }
     setInProgress(true);
-    const endpoint = addParams("/api/apod", {
-      start: formatDateISO(from),
-      end: formatDateISO(to),
+    const response = await fetch("/api/apod", {
+      ...postParams,
+      body: JSON.stringify({
+        start: formatDateISO(from),
+        end: formatDateISO(to),
+      }),
     });
-    const response = await fetch(endpoint);
     if (!response.ok) {
       setErrorMessage("Error fetching API");
       setInProgress(false);

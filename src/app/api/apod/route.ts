@@ -1,16 +1,15 @@
 import { addParams, validateDates } from "@/lib/helpers";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
   const endpoint = "https://api.nasa.gov/planetary/apod";
-  const { searchParams } = new URL(request.url);
-  const start = searchParams.get("start");
-  const end = searchParams.get("end");
+  const body = await request.json();
+  const { start, end }: { start?: string; end?: string } = body;
+  if (!start || !end)
+    return NextResponse.json({ error: "Missing Dates" }, { status: 400 });
   const apiKey = process.env.API_KEY;
   if (!apiKey)
     return NextResponse.json({ error: "Missing API Key" }, { status: 500 });
-  if (!start || !end)
-    return NextResponse.json({ error: "Missing Dates" }, { status: 400 });
   const params: Record<string, string> =
     start === end ? { date: start } : { start_date: start, end_date: end };
   const url = addParams(endpoint, {
@@ -18,10 +17,7 @@ export async function GET(request: Request) {
     thumbs: "true",
     ...params,
   });
-  const startDate = new Date(start);
-  const endDate = new Date(end);
-  [startDate, endDate].forEach((date) => date.setHours(0, 0, 0, 0));
-  const [status, message] = validateDates(startDate, endDate);
+  const [status, message] = validateDates(new Date(start), new Date(end));
   if (status != 200)
     return NextResponse.json({ error: message }, { status: status });
   console.log("Fetching external API");
@@ -33,10 +29,11 @@ export async function GET(request: Request) {
     );
   const remaining = response.headers.get("x-ratelimit-remaining");
   console.log(
-    `NASA API: ${remaining ? parseInt(remaining).toLocaleString() : "NaN"
+    `NASA API: ${
+      remaining ? parseInt(remaining).toLocaleString() : "NaN"
     } remaining requests.`
   );
   return NextResponse.json(await response.json(), {
-    headers: { 'Cache-Control': 'no-store' }
+    headers: { "Cache-Control": "no-store" },
   });
 }

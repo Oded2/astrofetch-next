@@ -2,7 +2,7 @@
 
 import { ErrorPage } from "@/components/ErrorPage";
 import { Viewer } from "@/components/Viewer";
-import { addParams } from "@/lib/helpers";
+import { postParams } from "@/lib/constants";
 import type { ApodData, ServerError } from "@/lib/types";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
@@ -13,9 +13,11 @@ function View() {
   const date = params?.get("date") ?? "2025-01-01";
 
   useEffect(() => {
-    const endpoint = addParams("/api/apod", { start: date, end: date });
     const fetchData = async () => {
-      const response = await fetch(endpoint);
+      const response = await fetch("/api/apod", {
+        ...postParams,
+        body: JSON.stringify({ start: date, end: date }),
+      });
       const json = await response.json();
       if (!response.ok) {
         setError({

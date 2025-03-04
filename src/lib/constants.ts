@@ -5,3 +5,9 @@ export const invalidDates = [
   new Date(1995, 5, 18),
   new Date(1995, 5, 19),
 ];
+export const postParams: RequestInit = {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
