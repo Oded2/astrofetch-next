@@ -108,7 +108,7 @@ export default function Range() {
     <>
       {!current && (
         <Container>
-          <Link href="/" className="hidden sm:btn">
+          <Link href="/" className="hidden sm:btn print:hidden">
             Home
           </Link>
           <div className="mt-2 flex flex-col sm:flex-row items-center gap-2">

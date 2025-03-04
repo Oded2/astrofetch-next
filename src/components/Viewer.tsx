@@ -91,7 +91,7 @@ export function Viewer({ apodData, priority, onBack }: Props) {
               <div className="my-auto">
                 {!apodData && (
                   <h1>
-                    <span className="font-bold">Loading</span>{" "}
+                    <span className="font-bold">Loading</span>
                     <span className="loading loading-dots"></span>
                   </h1>
                 )}
@@ -113,7 +113,7 @@ export function Viewer({ apodData, priority, onBack }: Props) {
                           {apodData.copyright.replaceAll("\\n", "")}
                         </span>
                       )}
-                      <div className="flex gap-2">
+                      <div className="flex gap-2 print:hidden">
                         {onBack ? (
                           <button
                             onClick={onBack}
