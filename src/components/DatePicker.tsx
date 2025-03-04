@@ -65,6 +65,12 @@ export function DatePicker({
             onSelect={setDate}
             month={month}
             onMonthChange={setMonth}
+            styles={{
+              dropdown: {
+                color: "#000",
+                backgroundColor: "#fff",
+              },
+            }}
           />
         </div>
       </div>
