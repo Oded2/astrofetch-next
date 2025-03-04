@@ -41,14 +41,20 @@ function isSameDay(date1: Date, date2: Date) {
 }
 
 export function validateDates(from: Date, to: Date): [number, string] {
+  const tempFrom = new Date(from);
+  const tempTo = new Date(to);
+  [tempFrom, tempTo].forEach((date) => date.setHours(0, 0, 0, 0));
   // Returns 200 and an empty string if valid
-  if (from < minDate) return [400, "Start date is too early"]; // Bad Request
-  if (to > new Date()) return [400, "End date cannot be in the future"];
-  if (from > to) return [400, "Start date cannot be after end date"];
-  if (invalidDates.some((date) => isSameDay(from, date)))
-    return [422, "Start date is invalid"]; // Unprocessable Entity
-  if (!isSameDay(from, to) && invalidDates.some((date) => isSameDay(to, date)))
+  if (tempFrom < minDate) return [400, "Start date is too early"];
+  if (tempTo > new Date()) return [400, "End date cannot be in the future"];
+  if (tempFrom > tempTo) return [400, "Start date cannot be after end date"];
+  if (invalidDates.some((date) => isSameDay(tempFrom, date)))
+    return [422, "Start date is invalid"];
+  if (
+    !isSameDay(tempFrom, tempTo) &&
+    invalidDates.some((date) => isSameDay(tempTo, date))
+  )
     return [422, "End date is invalid"];
-  if (to > safeDate) return [404, "Today's APOD isn't available yet"]; // Not Found
+  if (tempTo > safeDate) return [425, "Today's APOD isn't available yet"];
   return [200, ""]; // OK
 }
