@@ -5,10 +5,8 @@ import { formatDateISO } from "@/lib/helpers";
 import Link from "next/link";
 import { useState } from "react";
 
-const today = new Date();
-
 export default function Home() {
-  const [date, setDate] = useState<Date>(today);
+  const [date, setDate] = useState(new Date());
   const repoUrl = process.env.NEXT_PUBLIC_REPOSITORY_URL;
 
   return (
