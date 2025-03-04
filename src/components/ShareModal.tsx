@@ -5,6 +5,7 @@ import { Modal } from "./Modal";
 import { addParams, formatDateISO } from "@/lib/helpers";
 import Image from "next/image";
 import clsx from "clsx";
+import { postParams } from "@/lib/constants";
 
 interface Props {
   date: Date | null;
@@ -39,7 +40,12 @@ export function ShareModal({ date, ref }: Props) {
     if (url) {
       const getQrCode = async () => {
         if (!url) return;
-        const response = await fetch(addParams("/api/qrcode", { text: url }));
+        const response = await fetch("/api/qrcode", {
+          ...postParams,
+          body: JSON.stringify({
+            text: url,
+          }),
+        });
         const data = await response.json();
         setQr(data["qr"]);
       };

@@ -3,8 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const endpoint = "https://api.nasa.gov/planetary/apod";
-  const body = await request.json();
-  const { start, end }: { start?: string; end?: string } = body;
+  const { start, end }: { start?: string; end?: string } = await request.json();
   if (!start || !end)
     return NextResponse.json({ error: "Missing Dates" }, { status: 400 });
   const apiKey = process.env.API_KEY;

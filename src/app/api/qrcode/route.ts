@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
 import { toDataURL } from "qrcode";
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
   console.log("Creating QR Code");
-  const { searchParams } = new URL(request.url);
-  const text = searchParams.get("text");
+  const { text }: { text?: string } = await request.json();
   if (!text)
     return NextResponse.json({ error: "Text not defined" }, { status: 400 });
   try {
