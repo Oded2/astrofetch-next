@@ -6,6 +6,7 @@ import { postParams } from "@/lib/constants";
 import type { ApodData, ServerError } from "@/lib/types";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState, Suspense } from "react";
+
 function View() {
   const [apodData, setApodData] = useState<ApodData | null>(null);
   const [error, setError] = useState<ServerError | null>(null);
