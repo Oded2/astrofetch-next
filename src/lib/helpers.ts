@@ -28,10 +28,6 @@ export function formatDateISO(date: Date): string {
     .padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
 }
 
-export function generateRandomId(): string {
-  return Math.random().toString(36).substring(2, 15);
-}
-
 function isSameDay(date1: Date, date2: Date) {
   return (
     date1.getFullYear() === date2.getFullYear() &&

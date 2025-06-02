@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useId } from "react";
 import { DayPicker, Matcher } from "react-day-picker";
 import clsx from "clsx";
-import { generateRandomId } from "@/lib/helpers";
 import { invalidDates, minDate } from "@/lib/constants";
 
 interface Props {
@@ -29,10 +28,7 @@ export function DatePicker({
   setMonth,
   join = false,
 }: Props) {
-  const [id, setId] = useState<string | null>(null);
-  useEffect(() => {
-    setId(generateRandomId());
-  }, []);
+  const id = useId();
   return (
     <>
       {id ? (
