@@ -1,6 +1,6 @@
 "use client";
 
-import { useId } from "react";
+import { useEffect, useState } from "react";
 import { DayPicker, Matcher } from "react-day-picker";
 import clsx from "clsx";
 import { invalidDates, minDate } from "@/lib/constants";
@@ -21,6 +21,10 @@ const hiddenDays: Matcher[] = [
   ...invalidDates,
 ];
 
+function generateClientId(): string {
+  return Math.random().toString(36).substring(2, 15);
+}
+
 export function DatePicker({
   date,
   setDate,
@@ -28,7 +32,10 @@ export function DatePicker({
   setMonth,
   join = false,
 }: Props) {
-  const id = useId();
+  const [id, setId] = useState<string | null>(null);
+  useEffect(() => {
+    setId(generateClientId());
+  }, []);
   return (
     <>
       {id ? (
