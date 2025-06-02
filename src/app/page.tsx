@@ -37,7 +37,7 @@ export default function Home() {
             <DatePicker date={date} setDate={setDate} join></DatePicker>
             <Link
               href={{ pathname: "/view", query: { date: formatDateISO(date) } }}
-              className="btn btn-primary join-item"
+              className="btn btn-primary join-item shadow-none"
             >
               Quick Fetch
             </Link>
