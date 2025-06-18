@@ -15,12 +15,12 @@ export function ApodCard({ data, onShare, onView, id }: Props) {
   if (!allowedExtensions.some((val) => imgSrc.endsWith(val)))
     imgSrc = "/images/no-image.jpg";
   return (
-    <div className="card bg-base-300 shadow-sm h-full relative" id={id}>
+    <div className="card bg-base-300 shadow-sm h-full relative group" id={id}>
       <figure className="relative aspect-square">
         <Image
           src={imgSrc}
           alt={data.title}
-          className="object-cover"
+          className="object-cover group-hover:scale-110 transition-transform duration-300"
           fill
           sizes="95vw"
         ></Image>
