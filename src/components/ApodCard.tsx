@@ -15,7 +15,10 @@ export function ApodCard({ data, onShare, onView, id }: Props) {
   if (!allowedExtensions.some((val) => imgSrc.endsWith(val)))
     imgSrc = "/images/no-image.jpg";
   return (
-    <div className="card bg-base-300 shadow-sm h-full relative group" id={id}>
+    <div
+      className="card bg-base-300 shadow hover:shadow-lg transition-shadow h-full relative group"
+      id={id}
+    >
       <figure className="relative aspect-square">
         <Image
           src={imgSrc}
