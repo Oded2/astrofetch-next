@@ -8,6 +8,8 @@ interface Props {
 export function Container({ className = "", children }: Props) {
   const finalClassname = className ? ` ${className}` : "";
   return (
-    <div className={"container mx-auto p-5" + finalClassname}>{children}</div>
+    <div className={"container mx-auto px-5 sm:px-0" + finalClassname}>
+      {children}
+    </div>
   );
 }

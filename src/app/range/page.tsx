@@ -111,42 +111,43 @@ export default function Range() {
     <>
       {!current && (
         <Container>
-          <Link href="/" className="hidden sm:btn print:hidden">
-            Home
-          </Link>
-          <div className="mt-2 flex flex-col sm:flex-row items-center gap-2">
-            <Link href="/" className="btn sm:hidden">
+          <div className="sticky top-0 z-10 py-5 bg-base-100 flex flex-col gap-2">
+            <Link href="/" className="btn print:hidden me-auto">
               Home
             </Link>
-            <span className="label">FROM</span>
-            <DatePicker
-              date={from}
-              setDate={setFrom}
-              month={fromMonth}
-              setMonth={setFromMonth}
-            ></DatePicker>
-            <span className="label">TO</span>
-            <DatePicker
-              date={to}
-              setDate={setTo}
-              month={toMonth}
-              setMonth={setToMonth}
-            ></DatePicker>
-            <button onClick={fetchData} className="btn btn-primary w-20">
-              {inProgress && <span className="loading loading-spinner"></span>}
-              {!inProgress && <span>Fetch</span>}
-            </button>
-            <CheckBox
-              value={dynamicTo}
-              setValue={setDynamicTo}
-              label="Dynamically update range"
-            ></CheckBox>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="label">FROM</span>
+              <DatePicker
+                date={from}
+                setDate={setFrom}
+                month={fromMonth}
+                setMonth={setFromMonth}
+              ></DatePicker>
+              <span className="label">TO</span>
+              <DatePicker
+                date={to}
+                setDate={setTo}
+                month={toMonth}
+                setMonth={setToMonth}
+              ></DatePicker>
+              <button onClick={fetchData} className="btn btn-primary w-20">
+                {inProgress && (
+                  <span className="loading loading-spinner"></span>
+                )}
+                {!inProgress && <span>Fetch</span>}
+              </button>
+              <CheckBox
+                value={dynamicTo}
+                setValue={setDynamicTo}
+                label="Dynamically update range"
+              ></CheckBox>
+            </div>
+            {showWarning && (
+              <span className="font-light text-sm italic">
+                A large date range may result in longer load times.
+              </span>
+            )}
           </div>
-          {showWarning && (
-            <span className="font-light text-sm italic">
-              A large date range may result in longer load times.
-            </span>
-          )}
           <div className="grid justify-center md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-8 mt-10">
             {apods.map((item, index) => {
               return (
